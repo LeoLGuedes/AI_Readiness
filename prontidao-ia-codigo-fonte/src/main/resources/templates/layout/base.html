@@ -31,7 +31,7 @@
         <span>
           <span th:text="${usuarioLogado.nome}">Nome</span>
           <small class="texto-mudo"
-                 th:text="${usuarioLogado.gestor} ? 'Gestora de pessoas' : ${usuarioLogado.nomeDoTime}">Papel</small>
+                 th:text="${usuarioLogado.rotuloPapel}">Papel</small>
         </span>
       </span>
       <form th:action="@{/logout}" method="post">
@@ -61,11 +61,14 @@
         </div>
       </div>
 
-      <div sec:authorize="hasRole('GESTOR')">
-        <h4>Gestão</h4>
+      <div sec:authorize="hasAnyRole('GESTOR', 'LIDER')">
+        <h4 sec:authorize="hasRole('GESTOR')">Gestão · RH</h4>
+        <h4 sec:authorize="hasRole('LIDER')">Meu departamento</h4>
         <div class="menu">
           <a th:href="@{/gestao}"><button type="button"
              th:classappend="${menuAtivo == 'visao-geral'} ? 'active'">Visão geral</button></a>
+          <a th:href="@{/gestao/equipe}"><button type="button"
+             th:classappend="${menuAtivo == 'equipe'} ? 'active'">Equipe</button></a>
         </div>
       </div>
 

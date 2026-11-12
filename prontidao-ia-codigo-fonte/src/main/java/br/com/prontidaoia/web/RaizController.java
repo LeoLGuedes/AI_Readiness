@@ -11,6 +11,6 @@ public class RaizController {
 
     @GetMapping("/")
     public String raiz(@AuthenticationPrincipal UsuarioAutenticado usuario) {
-        return usuario.isGestor() ? "redirect:/gestao" : "redirect:/inicio";
+        return usuario.isAcessaGestao() ? "redirect:/gestao" : "redirect:/inicio";
     }
 }

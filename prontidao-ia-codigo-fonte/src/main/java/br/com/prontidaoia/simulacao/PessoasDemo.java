@@ -20,8 +20,13 @@ public final class PessoasDemo {
     public static final String TIME_FINANCEIRO = "Financeiro";
     public static final String TIME_MARKETING = "Marketing";
 
-    /** Gestora de pessoas; gestora dos três times. */
+    /** Gerente de RH (papel GESTOR): acompanha os três departamentos. */
     public static final String GESTORA = "Renata Guimarães";
+
+    /** Líderes de departamento (papel LIDER): cada um vê só o próprio time. */
+    public static final String LIDER_ATENDIMENTO = "Mônica Fagundes";
+    public static final String LIDER_FINANCEIRO = "Ricardo Pimenta";
+    public static final String LIDER_MARKETING = "Beatriz Arantes";
 
     /** Atendente que faz o check-in e as atividades ao vivo na demonstração. */
     public static final String CARLA = "Carla Menezes";
@@ -68,9 +73,9 @@ public final class PessoasDemo {
     /** Os três times, na ordem em que aparecem nas telas do gestor. */
     public static List<TimeDemo> times() {
         return List.of(
-                new TimeDemo(TIME_ATENDIMENTO, ATENDIMENTO),
-                new TimeDemo(TIME_FINANCEIRO, FINANCEIRO),
-                new TimeDemo(TIME_MARKETING, MARKETING));
+                new TimeDemo(TIME_ATENDIMENTO, LIDER_ATENDIMENTO, ATENDIMENTO),
+                new TimeDemo(TIME_FINANCEIRO, LIDER_FINANCEIRO, FINANCEIRO),
+                new TimeDemo(TIME_MARKETING, LIDER_MARKETING, MARKETING));
     }
 
     /**
@@ -86,7 +91,10 @@ public final class PessoasDemo {
         return (primeiro + "." + ultimo).toLowerCase(Locale.ROOT) + "@" + DOMINIO;
     }
 
-    /** Um time do cenário e os nomes das oito pessoas que o compõem. */
-    public record TimeDemo(String nome, List<String> membros) {
+    /**
+     * Um time do cenário, o nome do seu líder e as oito pessoas que o compõem.
+     * O líder não é membro: não entra nos indicadores do time.
+     */
+    public record TimeDemo(String nome, String lider, List<String> membros) {
     }
 }

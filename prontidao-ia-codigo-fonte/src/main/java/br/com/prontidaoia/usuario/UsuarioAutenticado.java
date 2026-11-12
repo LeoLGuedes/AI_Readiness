@@ -24,8 +24,19 @@ public class UsuarioAutenticado implements UserDetails {
     private final boolean ativo;
     private final Long timeId;
     private final String nomeDoTime;
+    /** Departamento liderado; preenchido somente para o papel LIDER. */
+    private final Long departamentoLideradoId;
+    private final String nomeDoDepartamentoLiderado;
 
     public UsuarioAutenticado(Usuario usuario) {
+        this(usuario, null);
+    }
+
+    /**
+     * @param departamentoLiderado o time que o usuario lidera (papel LIDER);
+     *                             nulo para os demais papeis
+     */
+    public UsuarioAutenticado(Usuario usuario, TimeEntity departamentoLiderado) {
         this.id = usuario.getId();
         this.nome = usuario.getNome();
         this.iniciais = usuario.getIniciais();
@@ -35,6 +46,9 @@ public class UsuarioAutenticado implements UserDetails {
         this.ativo = usuario.isAtivo();
         this.timeId = usuario.getTime() == null ? null : usuario.getTime().getId();
         this.nomeDoTime = usuario.getTime() == null ? null : usuario.getTime().getNome();
+        boolean lidera = usuario.isLider() && departamentoLiderado != null;
+        this.departamentoLideradoId = lidera ? departamentoLiderado.getId() : null;
+        this.nomeDoDepartamentoLiderado = lidera ? departamentoLiderado.getNome() : null;
     }
 
     public Long getId() {
@@ -67,8 +81,38 @@ public class UsuarioAutenticado implements UserDetails {
         return nomeDoTime;
     }
 
+    /** Gerente de RH: ve todos os departamentos. */
     public boolean isGestor() {
         return papel == Papel.GESTOR;
+    }
+
+    public boolean isLider() {
+        return papel == Papel.LIDER;
+    }
+
+    /** Lider ou gerente de RH: entra nas telas de {@code /gestao}. */
+    public boolean isAcessaGestao() {
+        return papel.acessaGestao();
+    }
+
+    /** Nulo para quem nao e lider (ou para o lider ainda sem departamento). */
+    public Long getDepartamentoLideradoId() {
+        return departamentoLideradoId;
+    }
+
+    public String getNomeDoDepartamentoLiderado() {
+        return nomeDoDepartamentoLiderado;
+    }
+
+    /** Texto do cargo exibido na barra superior. */
+    public String getRotuloPapel() {
+        return switch (papel) {
+            case GESTOR -> "Gerente de RH · todos os departamentos";
+            case LIDER -> nomeDoDepartamentoLiderado == null
+                    ? "Líder · sem departamento"
+                    : "Líder · " + nomeDoDepartamentoLiderado;
+            case COLABORADOR -> nomeDoTime;
+        };
     }
 
     @Override

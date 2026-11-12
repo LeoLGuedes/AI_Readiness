@@ -12,9 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class UsuarioDetailsService implements UserDetailsService {
 
     private final UsuarioRepository usuarios;
+    private final TimeRepository times;
 
-    public UsuarioDetailsService(UsuarioRepository usuarios) {
+    public UsuarioDetailsService(UsuarioRepository usuarios, TimeRepository times) {
         this.usuarios = usuarios;
+        this.times = times;
     }
 
     /**
@@ -26,7 +28,15 @@ public class UsuarioDetailsService implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return usuarios.findByEmail(email == null ? "" : email.trim().toLowerCase(Locale.ROOT))
-                .map(UsuarioAutenticado::new)
+                .map(u -> new UsuarioAutenticado(u, departamentoLiderado(u)))
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario nao encontrado: " + email));
+    }
+
+    /** O departamento do lider vem do banco no login, nunca de parametro da URL. */
+    private TimeEntity departamentoLiderado(Usuario usuario) {
+        if (!usuario.isLider()) {
+            return null;
+        }
+        return times.findByGestorIdOrderByNome(usuario.getId()).stream().findFirst().orElse(null);
     }
 }

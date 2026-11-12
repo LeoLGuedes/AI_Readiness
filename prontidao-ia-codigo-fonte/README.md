@@ -54,7 +54,7 @@ No Linux e no macOS: `docker compose up -d` e
 `java -jar prontidao-ia-0.1.0.jar --spring.profiles.active=demo`. Essa versão
 não reinicia quando o código muda.
 
-**Testes:** `.\gradlew.bat test`. São 82 testes, incluindo as 10 invariantes
+**Testes:** `.\gradlew.bat test`. São 120 testes, incluindo as 10 invariantes
 da seção 8.5. Os testes sobem o próprio PostgreSQL com Testcontainers e
 precisam só do Docker aberto.
 
@@ -65,9 +65,30 @@ o perfil `demo` está ativo.
 
 | Pessoa | E-mail | Papel |
 |---|---|---|
-| Renata Guimarães | `renata.guimaraes@aurora.com.br` | gestora de pessoas, gestora dos três times |
+| Renata Guimarães | `renata.guimaraes@aurora.com.br` | **gerente de RH**: vê todos os departamentos |
+| Mônica Fagundes | `monica.fagundes@aurora.com.br` | **líder** do Atendimento |
+| Ricardo Pimenta | `ricardo.pimenta@aurora.com.br` | **líder** do Financeiro |
+| Beatriz Arantes | `beatriz.arantes@aurora.com.br` | **líder** do Marketing |
 | Carla Menezes | `carla.menezes@aurora.com.br` | atendente, time Atendimento; faz o roteiro ao vivo |
 | Demais 23 colaboradores | `nome.sobrenome@aurora.com.br` | nomes em `simulacao/PessoasDemo.java` |
+
+## Hierarquia de departamentos
+
+| Papel | Vê | Cria colaboradores |
+|---|---|---|
+| Gerente de RH (`GESTOR`) | todos os departamentos (análise geral) | em qualquer departamento |
+| Líder (`LIDER`) | só o próprio departamento | só no próprio departamento |
+| Colaborador (`COLABORADOR`) | só os próprios dados | não cria |
+
+- A regra fica em `gestao/AcessoDepartamento.java`: toda rota de `/gestao` que
+  recebe um time, alerta ou recomendação pela URL confere o departamento e
+  devolve **403** se ele não for do líder.
+- A criação de contas fica em `/gestao/equipe`
+  (`ContaColaboradorService.cadastrarPelaLideranca`). O papel do autor e o
+  departamento que ele lidera vêm do banco, nunca do formulário.
+- O líder não é membro do time (não entra nos indicadores); ele se liga ao
+  departamento pela coluna `time.gestor_id` (migration `V4`).
+- Testes: `gestao/HierarquiaDepartamentosTest.java`. Decisões D55 a D59.
 
 O **Painel** (`/demo`, só no perfil `demo`) restaura o cenário, preenche o
 roteiro da Carla, gera respostas, fecha e avança ciclos.

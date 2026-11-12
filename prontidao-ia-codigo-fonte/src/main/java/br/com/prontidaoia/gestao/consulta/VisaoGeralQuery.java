@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,11 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * <p>Só lê fotografias de indicador, alertas e respostas agregadas por área.
  * Nunca lê check-in (regra de privacidade da seção 4).</p>
+ *
+ * <p>Hierarquia de departamentos: a consulta recebe os times que quem pede
+ * pode ver. A gerente de RH recebe todos; o líder, só o seu. O "maior erro"
+ * e o "maior ganho" são calculados apenas sobre os times visíveis, para que um
+ * líder não deduza nada dos outros departamentos.</p>
  */
 @Service
 public class VisaoGeralQuery {
@@ -63,21 +69,35 @@ public class VisaoGeralQuery {
     }
 
     public record VisaoGeral(List<Ciclo> ciclosFechados, Ciclo ciclo, MaiorErro maiorErro,
-                             List<CartaoTime> cartoes, GanhoDeConfianca destaque) {
+                             List<CartaoTime> cartoes, GanhoDeConfianca destaque, boolean empresaToda) {
 
         public boolean temCiclo() {
             return ciclo != null;
         }
+
+        /** "da empresa" para o RH; "do departamento" para o líder. */
+        public String abrangencia() {
+            return empresaToda ? "da empresa" : "do departamento";
+        }
+    }
+
+    /** Visão da empresa toda (gerente de RH). */
+    @Transactional(readOnly = true)
+    public VisaoGeral doCiclo(Integer numero) {
+        return doCiclo(numero, null);
     }
 
     /**
-     * @param numero ciclo pedido; nulo ou inexistente mostra o último fechado
+     * @param numero   ciclo pedido; nulo ou inexistente mostra o último fechado
+     * @param visiveis ids dos times que quem pede pode ver; nulo significa
+     *                 todos (gerente de RH)
      */
     @Transactional(readOnly = true)
-    public VisaoGeral doCiclo(Integer numero) {
+    public VisaoGeral doCiclo(Integer numero, Set<Long> visiveis) {
+        boolean empresaToda = visiveis == null;
         List<Ciclo> fechados = ciclos.findByStatusOrderByNumero(StatusCiclo.FECHADO);
         if (fechados.isEmpty()) {
-            return new VisaoGeral(List.of(), null, null, List.of(), null);
+            return new VisaoGeral(List.of(), null, null, List.of(), null, empresaToda);
         }
         Ciclo ciclo = fechados.stream()
                 .filter(c -> c.getNumero().equals(numero))
@@ -92,6 +112,9 @@ public class VisaoGeralQuery {
         List<RespostaAvaliada> daEmpresa = new ArrayList<>();
         GanhoDeConfianca destaque = null;
         for (TimeEntity time : times.findAllByOrderByNome()) {
+            if (!empresaToda && !visiveis.contains(time.getId())) {
+                continue;
+            }
             IndicadorTimeCiclo atual = doCiclo.get(time.getId());
             if (atual == null) {
                 continue;
@@ -112,7 +135,9 @@ public class VisaoGeralQuery {
                 }
             }
         }
-        return new VisaoGeral(fechados, ciclo, maiorErro(daEmpresa), cartoes, destaque);
+        // Com um só departamento, "maior ganho entre os times" não faz sentido.
+        return new VisaoGeral(fechados, ciclo, maiorErro(daEmpresa), cartoes,
+                cartoes.size() > 1 ? destaque : null, empresaToda);
     }
 
     /** Os quatro indicadores do Quadro 1, na ordem do wireframe. */

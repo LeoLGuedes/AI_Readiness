@@ -567,3 +567,16 @@ table.tabela-compacta {
 .profile-readonly {background:#F2F4F7;color:#475467}
 .form-actions {display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}
 @media (max-width:720px){.profile-grid {grid-template-columns:1fr}}
+
+/* Tela "Equipe" (hierarquia de departamentos) */
+.tela-equipe {
+  display: grid;
+  gap: 16px;
+}
+.tela-equipe .page-head,
+.tela-equipe .alert {
+  margin-bottom: 0;
+}
+.tela-equipe .grid {
+  align-items: start;
+}

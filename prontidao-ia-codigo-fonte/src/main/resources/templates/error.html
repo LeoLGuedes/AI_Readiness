@@ -23,7 +23,7 @@
         Não foi possível abrir esta página
       </h2>
       <p th:if="${status} == 403">
-        Esta tela pertence ao outro perfil de acesso. Cada papel enxerga apenas o que lhe cabe.
+        Esta tela pertence a outro perfil de acesso ou a outro departamento. Cada papel enxerga apenas o que lhe cabe.
       </p>
       <p th:if="${status} == 404">O endereço pedido não existe.</p>
       <p th:if="${mensagem}" th:text="${mensagem}">Mensagem da regra.</p>

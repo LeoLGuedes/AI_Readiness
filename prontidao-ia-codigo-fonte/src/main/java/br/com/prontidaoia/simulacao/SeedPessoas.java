@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Cria a gestora, os três times e os 24 colaboradores do cenário (seção 3).
+ * Cria a gerente de RH, os três times com seus líderes e os 24 colaboradores
+ * do cenário (seção 3).
  *
  * <p>Só o elenco: check-ins, tentativas e respostas são gerados pelo painel de
  * demonstração. A seção 5.5 proíbe inserir indicadores ou alertas direto no
@@ -40,17 +41,49 @@ public class SeedPessoas {
     }
 
     /**
-     * Semeia o elenco, se ainda não existir.
+     * Semeia o elenco, se ainda não existir, e garante um líder por
+     * departamento (também em bancos semeados antes da hierarquia).
      *
      * <p>A ordem importa: a gestora entra primeiro porque o time aponta para
      * ela, e os colaboradores entram por último porque apontam para o time.</p>
      */
     @Transactional
     public void semear() {
-        if (jaSemeado()) {
-            return;
+        if (!jaSemeado()) {
+            semearElenco();
         }
+        garantirLideres();
+    }
 
+    /**
+     * Cria os líderes que faltam e os coloca à frente dos departamentos.
+     * Idempotente: rodar de novo não duplica nada.
+     */
+    private void garantirLideres() {
+        String senha = null;
+        for (PessoasDemo.TimeDemo timeDemo : PessoasDemo.times()) {
+            TimeEntity time = times.findByNome(timeDemo.nome()).orElse(null);
+            if (time == null) {
+                continue;
+            }
+            String email = PessoasDemo.email(timeDemo.lider());
+            Usuario lider = usuarios.findByEmail(email).orElse(null);
+            if (lider == null) {
+                if (senha == null) {
+                    senha = encoder.encode(demo.senhaPadrao());
+                }
+                lider = usuarios.save(Usuario.lider(timeDemo.lider(), email, senha));
+            }
+            if (!lider.isLider()) {
+                continue;
+            }
+            if (time.getLider() == null || !time.getLider().getId().equals(lider.getId())) {
+                time.definirLider(lider);
+            }
+        }
+    }
+
+    private void semearElenco() {
         String senha = encoder.encode(demo.senhaPadrao());
 
         Usuario renata = usuarios.save(Usuario.gestor(

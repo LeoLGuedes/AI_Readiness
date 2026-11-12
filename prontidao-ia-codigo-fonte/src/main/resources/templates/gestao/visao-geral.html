@@ -7,7 +7,7 @@
 
   <div class="page-head">
     <div>
-      <h2>Visão geral dos times</h2>
+      <h2 th:text="${visao.empresaToda} ? 'Visão geral dos times' : 'Visão geral do departamento'">Visão geral dos times</h2>
       <p th:if="${visao.temCiclo()}"
          th:text="|Ciclo ${visao.ciclo.numero} · ${#temporals.format(visao.ciclo.inicio, 'dd/MM')} a ${#temporals.format(visao.ciclo.fim, 'dd/MM')} · fechado|">
         Ciclo 4 · 22/09 a 28/09 · fechado</p>
@@ -31,7 +31,7 @@
 
     <div class="alert warning faixa-erro" role="note" th:if="${visao.maiorErro != null}">
       <span>
-        <strong th:text="|Maior erro da empresa no ciclo ${visao.ciclo.numero}:|">Maior erro da empresa no ciclo 4:</strong>
+        <strong th:text="|Maior erro ${visao.abrangencia()} no ciclo ${visao.ciclo.numero}:|">Maior erro da empresa no ciclo 4:</strong>
         <span th:text="|${visao.maiorErro.area} · ${visao.maiorErro.erro}% de erro|">Verificação das respostas da IA · 42% de erro</span>
       </span>
     </div>
