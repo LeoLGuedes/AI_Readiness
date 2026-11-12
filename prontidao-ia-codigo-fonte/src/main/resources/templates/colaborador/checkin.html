@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: pagina('Check-in', ~{::conteudo})}">
+<body>
+<th:block th:fragment="conteudo" th:remove="tag">
+<div class="question-card">
+
+  <div class="page-head">
+    <div>
+      <h2>Check-in da semana</h2>
+      <p th:if="${ciclo != null}" th:text="|Ciclo ${ciclo.numero} de ${totalDeCiclos} · leva menos de um minuto.|">
+        Ciclo 4 de 6 · leva menos de um minuto.</p>
+    </div>
+  </div>
+
+  <div class="alert info" role="status" th:if="${ciclo == null}">
+    <span>Não há ciclo aberto no momento.</span>
+  </div>
+
+  <div class="alert success" role="status" th:if="${ciclo != null and jaRespondido}">
+    <span>Você já fez o check-in deste ciclo. Obrigado!
+      <a class="btn-ghost" th:href="@{/inicio}">Voltar ao início</a></span>
+  </div>
+
+  <form th:if="${ciclo != null and !jaRespondido}" th:action="@{/checkin}" th:object="${form}" method="post" novalidate>
+
+    <div class="alert danger" role="alert" th:if="${erro}"><span th:text="${erro}">Erro</span></div>
+
+    <!--/* Pergunta 1 */-->
+    <fieldset class="card pergunta" th:classappend="${#fields.hasErrors('confianca')} ? 'com-erro'">
+      <legend class="question-meta"><span>Pergunta 1 de 3</span></legend>
+      <h3 id="p1">Quão seguro(a) você se sente para usar o assistente de IA nas suas tarefas?</h3>
+      <div class="likert" role="radiogroup" aria-labelledby="p1">
+        <label th:each="n : ${#numbers.sequence(1, 5)}">
+          <input type="radio" th:field="*{confianca}" th:value="${n}">
+          <span class="likert-numero" th:text="${n}">1</span>
+          <small th:if="${n == 1}">Nada seguro</small>
+          <small th:if="${n == 5}">Totalmente seguro</small>
+        </label>
+      </div>
+      <p class="erro-campo" th:if="${#fields.hasErrors('confianca')}">Escolha uma opção de 1 a 5.</p>
+    </fieldset>
+
+    <!--/* Pergunta 2 */-->
+    <fieldset class="card pergunta" th:classappend="${#fields.hasErrors('receio')} ? 'com-erro'">
+      <legend class="question-meta"><span>Pergunta 2 de 3</span></legend>
+      <h3 id="p2">Quanto você concorda com a frase: a IA pode substituir parte do meu trabalho?</h3>
+      <div class="likert" role="radiogroup" aria-labelledby="p2">
+        <label th:each="n : ${#numbers.sequence(1, 5)}">
+          <input type="radio" th:field="*{receio}" th:value="${n}">
+          <span class="likert-numero" th:text="${n}">1</span>
+          <small th:if="${n == 1}">Discordo totalmente</small>
+          <small th:if="${n == 5}">Concordo totalmente</small>
+        </label>
+      </div>
+      <p class="erro-campo" th:if="${#fields.hasErrors('receio')}">Escolha uma opção de 1 a 5.</p>
+    </fieldset>
+
+    <!--/* Pergunta 3 */-->
+    <fieldset class="card pergunta"
+              th:classappend="${#fields.hasErrors('pergunta3Respondida') or #fields.hasErrors('nenhumaExclusiva')} ? 'com-erro'">
+      <legend class="question-meta"><span>Pergunta 3 de 3</span><span>marque todas que se aplicam</span></legend>
+      <h3>Quais dificuldades você teve com a IA nesta semana?</h3>
+      <label class="quiz-option" th:each="d : ${catalogo}">
+        <input type="checkbox" class="dificuldade" th:field="*{dificuldades}" th:value="${d.id}">
+        <span th:text="${d.descricao}">Receio de substituição</span>
+      </label>
+      <label class="quiz-option">
+        <input type="checkbox" class="nenhuma" th:field="*{nenhuma}">
+        <span>Nenhuma</span>
+      </label>
+      <p class="erro-campo" th:if="${#fields.hasErrors('pergunta3Respondida')}"
+         th:text="${#fields.errors('pergunta3Respondida')[0]}">Marque as dificuldades ou “nenhuma”.</p>
+      <p class="erro-campo" th:if="${#fields.hasErrors('nenhumaExclusiva')}"
+         th:text="${#fields.errors('nenhumaExclusiva')[0]}">“Nenhuma” não combina com outras.</p>
+    </fieldset>
+
+    <div class="alert info aviso-privacidade" role="note">
+      <span>Sua gestora vê apenas resultados do time, nunca as suas respostas, e só quando o time tem pelo menos 5 respostas.</span>
+    </div>
+
+    <div class="btn-row acoes-form">
+      <button type="submit" class="btn btn-primary">Enviar check-in</button>
+      <a class="btn btn-secondary" th:href="@{/inicio}">Cancelar</a>
+    </div>
+  </form>
+
+  <script>
+    // Ao responder, a pergunta deixa de aparecer como pendente de erro.
+    document.querySelectorAll('fieldset.pergunta').forEach(function (fs) {
+      fs.addEventListener('change', function () {
+        fs.classList.remove('com-erro');
+        var erro = fs.querySelector('.erro-campo');
+        if (erro) erro.hidden = true;
+      });
+    });
+
+    // "Nenhuma" é exclusiva (decisão D18): marcar uma opção desmarca a outra.
+    (function () {
+      var nenhuma = document.querySelector("input.nenhuma");
+      if (!nenhuma) return;
+      var outras = document.querySelectorAll('input.dificuldade');
+      nenhuma.addEventListener('change', function () {
+        if (nenhuma.checked) outras.forEach(function (c) { c.checked = false; });
+      });
+      outras.forEach(function (c) {
+        c.addEventListener('change', function () { if (c.checked) nenhuma.checked = false; });
+      });
+    })();
+  </script>
+
+</div>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: pagina('Meu histórico', ~{::conteudo})}">
+<body>
+<th:block th:fragment="conteudo" th:remove="tag">
+<div>
+
+  <div class="page-head">
+    <div>
+      <h2>Meu histórico</h2>
+      <p>Seu acerto nas atividades e a sua confiança, ciclo a ciclo.</p>
+    </div>
+  </div>
+
+  <div class="alert info nota-privada" role="note">
+    <span><strong>Só você vê estes dados.</strong> A gestão vê apenas resultados do time.</span>
+  </div>
+
+  <section class="card" aria-labelledby="titulo-grafico">
+    <h3 id="titulo-grafico">Acerto × confiança por ciclo</h3>
+    <div class="grafico-caixa">
+      <canvas id="grafico-historico" role="img"
+              aria-label="Gráfico de linhas com o seu acerto nas atividades e a sua confiança por ciclo, de 0 a 100. Os mesmos valores estão na tabela abaixo."></canvas>
+    </div>
+    <div class="legend">
+      <span><i class="dot" style="background:#8A0638"></i>Acerto nas atividades (%)</span>
+      <span><i class="dot" style="background:#177245"></i>Confiança (0 a 100)</span>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="titulo-tabela">
+    <h3 id="titulo-tabela">Ciclos</h3>
+    <div class="table-wrap">
+      <table class="tabela-compacta">
+        <thead>
+        <tr>
+          <th>Ciclo</th>
+          <th>Período</th>
+          <th class="num">Acerto</th>
+          <th class="num">Confiança (1 a 5)</th>
+          <th class="num">Receio de substituição (1 a 5)</th>
+          <th>Situação</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="l : ${linhas}">
+          <td th:text="${l.ciclo}">1</td>
+          <td th:text="|${#temporals.format(l.inicio, 'dd/MM')} a ${#temporals.format(l.fim, 'dd/MM')}|">01/09 a 07/09</td>
+          <td class="num">
+            <span th:if="${l.acertoPercentual != null}"
+                  th:text="|${l.acertoPercentual}% (${l.acertos} de ${l.respostas})|">65% (13 de 20)</span>
+            <span th:if="${l.acertoPercentual == null}" class="texto-mudo">sem atividade</span>
+          </td>
+          <td class="num">
+            <span th:if="${l.confianca != null}" th:text="${l.confianca}">3</span>
+            <span th:if="${l.confianca == null}" class="texto-mudo">sem check-in</span>
+          </td>
+          <td class="num">
+            <span th:if="${l.receio != null}" th:text="${l.receio}">2</span>
+            <span th:if="${l.receio == null}" class="texto-mudo">—</span>
+          </td>
+          <td>
+            <span class="badge" th:classappend="${l.status.name() == 'ABERTO'} ? 'badge-primary' : 'badge-muted'"
+                  th:text="${l.status.name() == 'ABERTO'} ? 'Em andamento' : 'Fechado'">Fechado</span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <script th:src="@{/js/chart.umd.min.js}"></script>
+  <script th:inline="javascript">
+    (function () {
+      var linhas = /*[[${linhas}]]*/ [];
+      new Chart(document.getElementById('grafico-historico'), {
+        type: 'line',
+        data: {
+          labels: linhas.map(function (l) { return 'Ciclo ' + l.ciclo; }),
+          datasets: [
+            { label: 'Acerto nas atividades (%)', data: linhas.map(function (l) { return l.acertoPercentual; }),
+              borderColor: '#8A0638', backgroundColor: '#8A0638', spanGaps: true, tension: 0.2 },
+            { label: 'Confiança (0 a 100)', data: linhas.map(function (l) { return l.confiancaPercentual; }),
+              borderColor: '#177245', backgroundColor: '#177245', spanGaps: true, tension: 0.2 }
+          ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          scales: { y: { min: 0, max: 100, ticks: { stepSize: 25 } } },
+          plugins: { legend: { display: false } }
+        }
+      });
+    })();
+  </script>
+
+</div>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: pagina(|Atividade ${atividade.codigo}|, ~{::conteudo})}">
+<body>
+<th:block th:fragment="conteudo" th:remove="tag">
+<div>
+
+  <div class="page-head">
+    <div>
+      <h2 th:text="|Atividade ${atividade.codigo} · ${atividade.titulo}|">Atividade 4A · Formulação e verificação</h2>
+      <p th:text="${atividade.descricao}">5 questões de formulação e 5 de verificação.</p>
+    </div>
+  </div>
+
+  <form id="form-atividade" th:action="@{/atividades/{id}/finalizar(id=${atividade.liberadaId})}" method="post"
+        th:attr="data-inicio=${atividade.iniciadaEmMillis()}" novalidate>
+    <div class="course-layout">
+
+      <div>
+        <div class="alert danger" role="alert" id="erro-atividade" th:hidden="${erro == null}">
+          <span th:text="${erro}">Responda todas as questões antes de finalizar.</span>
+        </div>
+
+        <fieldset class="card questao" th:each="q : ${atividade.questoes}" th:attr="data-questao=${q.id}">
+          <legend class="question-meta">
+            <span th:text="|Questão ${q.ordem} de ${#lists.size(atividade.questoes)}|">Questão 1 de 10</span>
+            <span th:text="${q.area}">Formulação de pedidos à IA</span>
+          </legend>
+          <p class="enunciado" th:text="${q.enunciado}">Enunciado</p>
+          <label class="quiz-option" th:each="alt, i : ${q.alternativas}">
+            <input type="radio" th:name="|q${q.id}|" th:value="${i.index}"
+                   th:checked="${escolhas[q.id] != null and escolhas[q.id] == i.index}">
+            <span th:text="${alt}">Alternativa</span>
+          </label>
+          <input type="hidden" th:name="|t${q.id}|" value="0" class="tempo">
+        </fieldset>
+      </div>
+
+      <aside class="course-side">
+        <div class="card">
+          <div class="kpi">
+            <div class="label">Tempo</div>
+            <div class="value" id="cronometro" aria-live="off">00:00</div>
+          </div>
+          <p class="num" id="contador" aria-live="polite">0 de 10 respondidas</p>
+          <div class="progress-track"><div class="progress-fill" id="barra" style="width: 0%"></div></div>
+          <button type="submit" class="btn btn-primary btn-largo">Finalizar atividade</button>
+          <p class="helper">Todas as questões precisam estar respondidas.</p>
+        </div>
+      </aside>
+
+    </div>
+  </form>
+
+  <script>
+    (function () {
+      var form = document.getElementById('form-atividade');
+      var inicio = Number(form.dataset.inicio);
+      var questoes = Array.prototype.slice.call(form.querySelectorAll('fieldset.questao'));
+      var cronometro = document.getElementById('cronometro');
+      var contador = document.getElementById('contador');
+      var barra = document.getElementById('barra');
+      var caixaErro = document.getElementById('erro-atividade');
+
+      // Cronômetro visível, contado a partir do início gravado no servidor:
+      // recarregar a página não zera o tempo.
+      function doisDigitos(n) { return (n < 10 ? '0' : '') + n; }
+      function atualizarCronometro() {
+        var s = Math.max(0, Math.floor((Date.now() - inicio) / 1000));
+        cronometro.textContent = doisDigitos(Math.floor(s / 60)) + ':' + doisDigitos(s % 60);
+      }
+      atualizarCronometro();
+      setInterval(atualizarCronometro, 1000);
+
+      function respondida(fs) { return fs.querySelector('input[type=radio]:checked') !== null; }
+      function atualizarContador() {
+        var n = questoes.filter(respondida).length;
+        contador.textContent = n + ' de ' + questoes.length + ' respondidas';
+        barra.style.width = (n * 100 / questoes.length) + '%';
+      }
+      atualizarContador();
+
+      // tempo_segundos (decisão D17): intervalo entre esta marcação e a anterior.
+      var ultimaMarcacao = Date.now();
+      questoes.forEach(function (fs) {
+        var tempo = fs.querySelector('input.tempo');
+        fs.addEventListener('change', function () {
+          var agora = Date.now();
+          tempo.value = Number(tempo.value) + Math.round((agora - ultimaMarcacao) / 1000);
+          ultimaMarcacao = agora;
+          atualizarContador();
+        });
+      });
+
+      form.addEventListener('submit', function (e) {
+        var faltam = questoes.filter(function (fs) { return !respondida(fs); });
+        if (faltam.length > 0) {
+          e.preventDefault();
+          var numeros = faltam.map(function (fs) { return questoes.indexOf(fs) + 1; });
+          caixaErro.hidden = false;
+          caixaErro.querySelector('span').textContent =
+            'Responda todas as questões antes de finalizar. Faltam: ' + numeros.join(', ') + '.';
+          caixaErro.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          faltam[0].querySelector('input[type=radio]').focus({ preventScroll: true });
+        }
+      });
+    })();
+  </script>
+
+</div>
+</th:block>
+</body>
+</html>

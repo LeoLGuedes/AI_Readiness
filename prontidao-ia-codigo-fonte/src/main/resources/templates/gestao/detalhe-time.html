@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: pagina(${d.nome}, ~{::conteudo})}">
+<body>
+<th:block th:fragment="conteudo" th:remove="tag">
+<div>
+
+  <a class="btn-ghost voltar" th:href="@{/gestao(ciclo=${d.cicloFoco > 0 ? d.cicloFoco : null})}">← Visão geral</a>
+
+  <div class="page-head">
+    <div>
+      <h2 th:text="${d.nome}">Atendimento</h2>
+      <p th:text="|${d.membros} membros · ciclo ${d.cicloFoco} de ${d.totalCiclos}|">8 membros · ciclo 4 de 6</p>
+    </div>
+    <form th:if="${d.temDados()}" method="get" th:action="@{/gestao/times/{id}(id=${d.timeId})}" class="seletor-ciclo">
+      <label for="ate">Intervalo</label>
+      <select id="ate" name="ate" onchange="this.form.submit()">
+        <option th:each="c : ${d.ciclosFechados}" th:value="${c}" th:selected="${c == d.cicloFoco}"
+                th:text="|ciclos 1 a ${c}|">ciclos 1 a 4</option>
+      </select>
+      <noscript><button type="submit" class="btn btn-secondary">Ver</button></noscript>
+    </form>
+  </div>
+
+  <div class="alert success" role="status" th:if="${sucesso}"><span th:text="${sucesso}">Escopo salvo.</span></div>
+
+  <div class="alert info" role="status" th:unless="${d.temDados()}">
+    <span>Este time ainda não tem ciclo fechado.</span>
+  </div>
+
+  <th:block th:if="${d.temDados()}">
+
+    <!--/* Caixa do alerta */-->
+    <section class="card caixa-alerta" th:each="a : ${d.alertas}"
+             th:classappend="${a.selo.prioridade.name() == 'ALTA'} ? 'alerta-alta' : 'alerta-normal'">
+      <div class="card-topo">
+        <h3>
+          <span class="badge badge-alerta" th:classappend="${a.selo.classe()}"
+                th:text="|Prioridade ${a.selo.rotuloPrioridade()}|">Prioridade Alta</span>
+          <span th:text="${a.selo.nome}">Sabe usar, mas não se sente pronto</span>
+        </h3>
+        <span class="badge badge-muted" th:text="${#strings.capitalize(a.selo.rotuloStatus())}">Aberto</span>
+      </div>
+      <p class="texto-mudo">
+        <span th:text="|Gerado no fechamento do ciclo ${a.cicloGerado}|">Gerado no fechamento do ciclo 4</span>
+        <span th:if="${a.cicloResolucao != null}" th:text="|· resolvido no fechamento do ciclo ${a.cicloResolucao}|"></span>
+      </p>
+      <p class="frase-alerta" th:text="|“${a.frase}”|">“Técnico subiu de 61 para 67 e 72; confiança caiu de 59 para 53 e 47.”</p>
+      <p th:if="${a.quedaEngajamento != null}"
+         th:text="|Engajamento caiu ${a.quedaEngajamento} pontos → prioridade alta.|">Engajamento caiu 13 pontos → prioridade alta.</p>
+      <a class="btn btn-primary" th:href="@{/gestao/alertas/{id}/recomendacao(id=${a.selo.id})}">Ver recomendação →</a>
+    </section>
+
+    <!--/* Gráfico de linhas */-->
+    <section class="card" aria-labelledby="titulo-grafico">
+      <h3 id="titulo-grafico">Indicadores por ciclo</h3>
+      <div class="grafico-caixa">
+        <canvas id="grafico-time" role="img"
+                th:attr="aria-label=|Gráfico de linhas com técnico, confiança, resistência e engajamento do ${d.nome} por ciclo, de 0 a 100. Os valores de cada ciclo estão nos cartões da visão geral.|"></canvas>
+      </div>
+      <div class="legend">
+        <span><i class="dot" style="background:#8A0638"></i>Técnico</span>
+        <span><i class="dot" style="background:#177245"></i>Confiança</span>
+        <span><i class="dot" style="background:#B42318"></i>Resistência</span>
+        <span><i class="dot" style="background:#A15C00"></i>Engajamento</span>
+        <span th:if="${d.series.cicloIntervencao != null}"><i class="traco"></i>Intervenção</span>
+      </div>
+    </section>
+
+    <div class="grid grid-2 blocos-detalhe">
+
+      <section class="card" aria-labelledby="titulo-erro">
+        <h3 id="titulo-erro" th:text="|Erro por área · ciclo ${d.cicloFoco}|">Erro por área · ciclo 4</h3>
+        <div class="bar-list">
+          <div class="bar-row" th:each="b : ${d.erroPorArea}">
+            <span th:text="${b.rotulo}">Verificação</span>
+            <div class="bar-bg"><div class="bar-fill" th:style="|width: ${b.valor}%|"></div></div>
+            <span class="num" th:text="${b.legenda}">33%</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="titulo-dificuldades">
+        <h3 id="titulo-dificuldades" th:text="|Dificuldades relatadas · ciclo ${d.cicloFoco}|">Dificuldades relatadas</h3>
+        <div class="alert warning" role="note" th:if="${d.dificuldades == null}">
+          <span th:text="|Amostra insuficiente: ${d.amostra.checkins} de ${d.amostra.membros} check-ins, mínimo de ${d.amostra.minimo}. As dificuldades não são exibidas para proteger quem respondeu.|">
+            Amostra insuficiente.</span>
+        </div>
+        <div class="bar-list barras-largas" th:if="${d.dificuldades != null}">
+          <div class="bar-row" th:each="b : ${d.dificuldades}">
+            <span th:text="${b.rotulo}">Receio de substituição</span>
+            <div class="bar-bg"><div class="bar-fill fill-dificuldade" th:style="|width: ${b.valor}%|"></div></div>
+            <span class="num" th:text="${b.legenda}">5 (71% de 7 respostas)</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="titulo-produtividade">
+        <h3 id="titulo-produtividade">Produtividade</h3>
+        <p class="num">
+          <span th:text="|Ciclo 1: ${#numbers.formatDecimal(d.produtividade.primeiro, 1, 1, 'COMMA')} min por atividade|">Ciclo 1: 14,0 min por atividade</span><br>
+          <span th:text="|Ciclo ${d.produtividade.cicloAtual}: ${#numbers.formatDecimal(d.produtividade.atual, 1, 1, 'COMMA')} min (${#numbers.formatDecimal(d.produtividade.diferenca, 1, 1, 'COMMA')})|">Ciclo 4: 10,9 min (−3,1)</span>
+        </p>
+        <p class="texto-mudo" th:text="|Ler junto com o técnico (${d.produtividade.tecnicoAtual}): mais rápido só é ganho se o acerto não cair.|">
+          Ler junto com o técnico (72).</p>
+      </section>
+
+      <section class="card" aria-labelledby="titulo-amostra">
+        <h3 id="titulo-amostra">Amostra</h3>
+        <div class="alert" th:classappend="${d.amostra.suficiente} ? 'info' : 'warning'" role="note">
+          <span th:text="|${d.amostra.checkins} de ${d.amostra.membros} check-ins respondidos (mínimo de ${d.amostra.minimo})|">
+            7 de 8 check-ins respondidos (mínimo de 5)</span>
+        </div>
+      </section>
+
+    </div>
+
+    <!--/* Comparar antes e depois */-->
+    <section class="card" aria-labelledby="titulo-comparar" th:if="${d.comparacao != null}">
+      <h3 id="titulo-comparar">Comparar antes e depois</h3>
+      <p class="texto-mudo" th:text="|Intervenção aplicada a partir do ciclo ${d.comparacao.cicloIntervencao}.|">
+        Intervenção aplicada a partir do ciclo 5.</p>
+      <div class="table-wrap">
+        <table class="tabela-compacta">
+          <thead>
+          <tr>
+            <th>Indicador</th>
+            <th class="num" th:each="c, i : ${d.comparacao.ciclos}"
+                th:text="${i.first} ? |C${c} (antes)| : |C${c}|">C4 (antes)</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="l : ${d.comparacao.linhas}">
+            <td th:text="${l.indicador}">Técnico</td>
+            <td class="num" th:each="v : ${l.valores}" th:text="${v != null} ? ${v} : '—'">72</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <script th:src="@{/js/chart.umd.min.js}"></script>
+    <script th:inline="javascript">
+      (function () {
+        var s = /*[[${d.series}]]*/ {};
+        var intervencao = s.cicloIntervencao;
+
+        // Linha vertical tracejada no ciclo da intervenção (seção 6).
+        var marcador = {
+          id: 'marcadorIntervencao',
+          afterDatasetsDraw: function (chart) {
+            if (!intervencao) return;
+            var x = chart.scales.x.getPixelForValue(intervencao - 1);
+            var area = chart.chartArea, ctx = chart.ctx;
+            ctx.save();
+            ctx.strokeStyle = '#667085';
+            ctx.setLineDash([6, 4]);
+            ctx.beginPath();
+            ctx.moveTo(x, area.top);
+            ctx.lineTo(x, area.bottom);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = '#475467';
+            ctx.font = '12px Inter, Segoe UI, Arial, sans-serif';
+            ctx.fillText('intervenção', x + 6, area.top + 12);
+            ctx.restore();
+          }
+        };
+
+        function serie(rotulo, dados, cor) {
+          return { label: rotulo, data: dados, borderColor: cor, backgroundColor: cor, tension: 0.2, spanGaps: false };
+        }
+
+        new Chart(document.getElementById('grafico-time'), {
+          type: 'line',
+          data: {
+            labels: s.rotulos,
+            datasets: [
+              serie('Técnico', s.tecnico, '#8A0638'),
+              serie('Confiança', s.confianca, '#177245'),
+              serie('Resistência', s.resistencia, '#B42318'),
+              serie('Engajamento', s.engajamento, '#A15C00')
+            ]
+          },
+          options: {
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            scales: { y: { min: 0, max: 100, ticks: { stepSize: 25 } } },
+            plugins: { legend: { display: false } }
+          },
+          plugins: [marcador]
+        });
+      })();
+    </script>
+
+  </th:block>
+
+</div>
+</th:block>
+</body>
+</html>

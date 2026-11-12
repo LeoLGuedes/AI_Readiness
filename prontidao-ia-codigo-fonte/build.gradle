@@ -1,0 +1,65 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.5'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'br.com.prontidaoia'
+version = '0.1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+// O Testcontainers 1.19 que acompanha o Boot 3.3.5 usa uma versao da API do
+// Docker que o Docker Engine 29 recusa (erro 400). A 1.21.4 negocia a versao certa.
+ext['testcontainers.version'] = '1.21.4'
+
+// Nomes, enunciados e textos de tela estao em pt-BR: o fonte e UTF-8, e nao o
+// encoding padrao do Windows.
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+tasks.withType(Test).configureEach {
+    systemProperty 'file.encoding', 'UTF-8'
+}
+
+dependencies {
+    // Web e renderizacao no servidor
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Seguranca (login por formulario, BCrypt, papeis)
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Persistencia
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-database-postgresql'
+    runtimeOnly 'org.postgresql:postgresql'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // Testes
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:postgresql'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+        exceptionFormat 'full'
+    }
+}

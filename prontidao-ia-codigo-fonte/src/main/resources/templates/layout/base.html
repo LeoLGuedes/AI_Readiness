@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:fragment="pagina(titulo, conteudo)">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="|${titulo} · Prontidão IA|">Prontidão IA</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="app-shell">
+
+  <a class="pular-para-conteudo" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="topbar">
+    <a class="brand" th:href="@{/}">
+      <span class="brand-mark" aria-hidden="true">PI</span>
+      <span>
+        Prontidão IA
+        <small>Seguradora Aurora</small>
+      </span>
+    </a>
+
+    <div class="nav-actions" th:if="${usuarioLogado != null}">
+      <span class="user-chip">
+        <span class="avatar" aria-hidden="true" th:text="${usuarioLogado.iniciais}">RG</span>
+        <span>
+          <span th:text="${usuarioLogado.nome}">Nome</span>
+          <small class="texto-mudo"
+                 th:text="${usuarioLogado.gestor} ? 'Gestora de pessoas' : ${usuarioLogado.nomeDoTime}">Papel</small>
+        </span>
+      </span>
+      <form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn btn-secondary">Sair</button>
+      </form>
+    </div>
+  </header>
+
+  <p class="faixa-demo" th:if="${ambienteDemo}" role="status">
+    Ambiente de demonstração: dados simulados
+  </p>
+
+  <div class="layout">
+
+    <nav class="sidebar" aria-label="Menu principal">
+      <div sec:authorize="hasRole('COLABORADOR')">
+        <h4>Minha semana</h4>
+        <div class="menu">
+          <a th:href="@{/inicio}"><button type="button"
+             th:classappend="${menuAtivo == 'inicio'} ? 'active'">Início</button></a>
+          <a th:href="@{/checkin}"><button type="button"
+             th:classappend="${menuAtivo == 'checkin'} ? 'active'">Check-in</button></a>
+          <a th:href="@{/meu-historico}"><button type="button"
+             th:classappend="${menuAtivo == 'historico'} ? 'active'">Meu histórico</button></a>
+          <a th:href="@{/perfil}"><button type="button"
+             th:classappend="${menuAtivo == 'perfil'} ? 'active'">Meu perfil</button></a>
+        </div>
+      </div>
+
+      <div sec:authorize="hasRole('GESTOR')">
+        <h4>Gestão</h4>
+        <div class="menu">
+          <a th:href="@{/gestao}"><button type="button"
+             th:classappend="${menuAtivo == 'visao-geral'} ? 'active'">Visão geral</button></a>
+        </div>
+      </div>
+
+      <div th:if="${ambienteDemo}">
+        <h4>Demonstração</h4>
+        <div class="menu">
+          <a th:href="@{/demo}"><button type="button"
+             th:classappend="${menuAtivo == 'demo'} ? 'active'">Painel</button></a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="content" id="conteudo">
+      <th:block th:replace="${conteudo}">Conteúdo da tela</th:block>
+    </main>
+
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: pagina('Recomendação', ~{::conteudo})}">
+<body>
+<th:block th:fragment="conteudo" th:remove="tag">
+<div class="question-card">
+
+  <a class="btn-ghost voltar" th:href="@{/gestao/times/{id}(id=${tela.timeId})}" th:text="|← ${tela.time}|">← Atendimento</a>
+
+  <div class="page-head">
+    <div>
+      <h2 th:text="${tela.titulo()}">Sabe usar, mas não se sente pronto – Atendimento – ciclo 4</h2>
+      <p>
+        <span class="badge badge-alerta" th:classappend="${tela.selo.classe()}"
+              th:text="|Prioridade ${tela.selo.rotuloPrioridade()}|">Prioridade Alta</span>
+        <span class="badge badge-muted" th:text="${#strings.capitalize(tela.selo.rotuloStatus())}">Aberto</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="alert danger" role="alert" th:if="${erro}"><span th:text="${erro}">Erro.</span></div>
+
+  <form th:action="@{/gestao/alertas/{id}/recomendacao/ajustar(id=${tela.alertaId})}" method="post" id="form-ajuste">
+
+    <article class="card item-recomendacao" th:each="item, i : ${tela.itens}">
+      <div class="card-topo">
+        <h3 th:text="|${i.count}. ${item.texto}|">1. Comunicação da liderança…</h3>
+        <span class="badge" th:classappend="${item.humana} ? 'badge-warning' : 'badge-primary'"
+              th:text="${item.humana} ? 'Ação humana' : 'Plataforma'">Ação humana</span>
+      </div>
+
+      <div class="form-group" th:if="${ajustando and tela.decidivel()}">
+        <label th:for="|texto${item.id}|">Texto ajustado</label>
+        <textarea th:id="|texto${item.id}|" th:name="|texto${item.id}|" rows="3" th:text="${item.texto}">texto</textarea>
+        <span class="helper">Deixe como está para aceitar o item sem mudança.</span>
+      </div>
+
+      <dl class="dados-item">
+        <div th:if="${item.temDificuldade()}">
+          <dt>Dificuldade ligada</dt>
+          <dd th:text="|${item.dificuldade} · ${item.contagem()}|">Receio de substituição · 5 de 7 respostas</dd>
+        </div>
+        <div>
+          <dt>Executor</dt>
+          <dd th:text="${item.executor}">Liderança</dd>
+        </div>
+        <div>
+          <dt>Situação</dt>
+          <dd th:text="${item.rotuloStatus()}">Sugerida</dd>
+        </div>
+      </dl>
+
+      <details class="por-que">
+        <summary>Por que esta recomendação?</summary>
+        <p th:if="${item.temDificuldade()}"
+           th:text="|${item.percentual()}% das respostas do time neste ciclo (${item.contagem()}) marcaram “${item.dificuldade}”. Ela está entre as duas dificuldades mais marcadas, e esta é a intervenção ligada a ela no catálogo.|">
+          71% das respostas…</p>
+        <p th:unless="${item.temDificuldade()}">Esta recomendação vem da própria regra do alerta, e não de uma dificuldade marcada no check-in.</p>
+        <p><strong>Regra ativa:</strong> <span th:text="${tela.regra}">Regra A…</span></p>
+        <p><strong>Valores:</strong> <span th:text="${tela.frase}">Técnico subiu…</span></p>
+      </details>
+    </article>
+
+    <div class="btn-row acoes-form" th:if="${tela.decidivel()}">
+      <th:block th:unless="${ajustando}">
+        <button type="submit" class="btn btn-primary"
+                th:formaction="@{/gestao/alertas/{id}/recomendacao/aceitar(id=${tela.alertaId})}">Aceitar e ajustar escopo</button>
+        <a class="btn btn-secondary" th:href="@{/gestao/alertas/{id}/recomendacao(id=${tela.alertaId}, ajustar='')}">Ajustar recomendação</a>
+        <button type="submit" class="btn btn-danger"
+                th:formaction="@{/gestao/alertas/{id}/recomendacao/adiar(id=${tela.alertaId})}">Adiar</button>
+      </th:block>
+      <th:block th:if="${ajustando}">
+        <button type="submit" class="btn btn-primary">Salvar ajuste e seguir para o escopo</button>
+        <a class="btn btn-secondary" th:href="@{/gestao/alertas/{id}/recomendacao(id=${tela.alertaId})}">Cancelar ajuste</a>
+      </th:block>
+    </div>
+
+    <div class="alert info" role="status" th:unless="${tela.decidivel()}">
+      <span>A decisão sobre este alerta já foi tomada.
+        <a class="btn-ghost" th:href="@{/gestao/times/{id}/escopo(id=${tela.timeId})}">Ver escopo e agendamentos</a></span>
+    </div>
+  </form>
+
+  <p class="rodape-recomendacao">As recomendações apoiam a decisão da gestão e não a substituem.</p>
+
+</div>
+</th:block>
+</body>
+</html>

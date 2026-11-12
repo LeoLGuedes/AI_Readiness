@@ -1,0 +1,1798 @@
+{
+  "atividades": [
+    {
+      "codigo": "1A",
+      "titulo": "Formulação e verificação",
+      "nivel": 1,
+      "descricao": "5 questões de formulação de pedidos e 5 de verificação das respostas da IA.",
+      "questoes": [
+        {
+          "ordem": 1,
+          "area": "FORMULACAO",
+          "enunciado": "Um analista quer que o assistente resuma um relatório de sinistros para a diretoria. Qual pedido tende a gerar a resposta mais útil?",
+          "alternativas": [
+            "“Resuma isso.”",
+            "“Me diga o que você acha do relatório.”",
+            "“Faça um resumo muito bom e completo.”",
+            "“Resuma o relatório abaixo em até 5 tópicos, para a diretoria, destacando a variação da sinistralidade e as causas principais.”"
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Um bom pedido diz o público, o formato, o tamanho e o foco. Pedidos vagos obrigam a IA a adivinhar o que importa."
+        },
+        {
+          "ordem": 2,
+          "area": "FORMULACAO",
+          "enunciado": "Você pediu ao assistente um e-mail de resposta a um segurado e o texto veio formal demais. Qual é o melhor próximo passo?",
+          "alternativas": [
+            "Escrever apenas “melhore”.",
+            "Repetir o mesmo pedido, com as mesmas palavras.",
+            "Desistir do assistente e escrever tudo do zero.",
+            "Refinar o pedido: “Reescreva em tom cordial e direto, com no máximo 120 palavras, mantendo as informações do prazo.”"
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Refinar com instruções concretas (tom, tamanho, o que manter) costuma resolver em uma rodada. “Melhore” não diz o que mudar."
+        },
+        {
+          "ordem": 3,
+          "area": "FORMULACAO",
+          "enunciado": "Por que começar o pedido com o contexto, como “sou analista de subscrição de seguro auto”, ajuda?",
+          "alternativas": [
+            "Orienta o vocabulário, o nível de detalhe e os exemplos para a sua realidade de trabalho.",
+            "Faz a IA responder mais rápido.",
+            "Autoriza a IA a acessar os sistemas internos da empresa.",
+            "Garante que a resposta estará correta."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "O contexto ajusta a resposta ao seu cenário, mas não garante que ela esteja correta e não dá acesso a sistemas."
+        },
+        {
+          "ordem": 4,
+          "area": "FORMULACAO",
+          "enunciado": "Você quer uma tabela comparando três planos de seguro residencial. O que o pedido deve trazer?",
+          "alternativas": [
+            "As colunas desejadas (cobertura, franquia, preço) e os dados dos três planos.",
+            "O pedido em inglês, para melhorar o resultado.",
+            "Apenas “compare os planos”.",
+            "Um pedido para a IA buscar sozinha os preços dos concorrentes, sem conferir."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Quando você fornece os dados e a estrutura, a IA organiza em vez de inventar. Preços buscados pela IA podem estar errados ou desatualizados."
+        },
+        {
+          "ordem": 5,
+          "area": "FORMULACAO",
+          "enunciado": "Qual técnica mais ajuda o assistente a seguir o padrão de texto da empresa?",
+          "alternativas": [
+            "Pedir sempre respostas curtas.",
+            "Incluir no pedido um ou dois exemplos do padrão esperado.",
+            "Repetir “siga o padrão” várias vezes.",
+            "Escrever o pedido todo em letras maiúsculas."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Exemplos mostram o tom e a estrutura melhor do que qualquer descrição. É a técnica conhecida como “few-shot”."
+        },
+        {
+          "ordem": 6,
+          "area": "VERIFICACAO",
+          "enunciado": "O assistente cita a “Circular SUSEP nº 999/2023” como base para uma regra. O que fazer?",
+          "alternativas": [
+            "Perguntar à IA se ela tem certeza e aceitar o “sim”.",
+            "Citar a norma no parecer, já que a IA informou.",
+            "Conferir na fonte oficial se a norma existe e se diz isso antes de usar.",
+            "Trocar o número por outro parecido."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "A IA pode inventar referências com aparência real (a chamada alucinação). A confirmação da própria IA não é verificação."
+        },
+        {
+          "ordem": 7,
+          "area": "VERIFICACAO",
+          "enunciado": "Um resumo feito pela IA diz que a apólice cobre alagamento. Como verificar?",
+          "alternativas": [
+            "Pedir outro resumo e ver se a informação se repete.",
+            "Confiar, porque o resumo estava bem escrito.",
+            "Perguntar a um colega se ele acha que cobre.",
+            "Localizar a cláusula na apólice original e comparar com o resumo."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Texto bem escrito não significa texto correto. A fonte da verdade é o documento original."
+        },
+        {
+          "ordem": 8,
+          "area": "VERIFICACAO",
+          "enunciado": "Qual destes é um sinal de alerta em uma resposta da IA?",
+          "alternativas": [
+            "A resposta estar em português.",
+            "Números e datas muito precisos, sem indicação de onde vieram.",
+            "A resposta estar organizada em tópicos.",
+            "A resposta ser curta."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Precisão sem fonte é um padrão típico de informação inventada. Quanto mais específico o dado, mais importante conferir."
+        },
+        {
+          "ordem": 9,
+          "area": "VERIFICACAO",
+          "enunciado": "A IA calculou o valor de uma indenização proporcional. Qual verificação faz sentido?",
+          "alternativas": [
+            "Pedir que a IA explique o cálculo em outras palavras e aceitar.",
+            "Refazer a conta com os dados da apólice ou pela calculadora do sistema.",
+            "Nenhuma: a IA não erra contas.",
+            "Apenas arredondar o valor."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Modelos de linguagem erram aritmética com frequência. Valores que chegam ao cliente precisam de conferência independente."
+        },
+        {
+          "ordem": 10,
+          "area": "VERIFICACAO",
+          "enunciado": "Ao revisar um texto da IA que vai para um cliente, o que conferir primeiro?",
+          "alternativas": [
+            "Se os fatos (valores, prazos e coberturas) batem com o sistema e com o contrato.",
+            "Se o texto é longo o bastante.",
+            "Se o texto usa emojis.",
+            "Qual fonte a IA usou para o estilo."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Erros de fato geram reclamação e risco regulatório. O estilo pode ser ajustado depois."
+        }
+      ]
+    },
+    {
+      "codigo": "1B",
+      "titulo": "Dados e aplicação no setor",
+      "nivel": 1,
+      "descricao": "5 questões de uso seguro de dados e 5 de aplicação em tarefas do setor.",
+      "questoes": [
+        {
+          "ordem": 1,
+          "area": "DADOS",
+          "enunciado": "Você quer ajuda do assistente para redigir a resposta a uma reclamação. O que colar no pedido?",
+          "alternativas": [
+            "O conteúdo da reclamação, sem dados que identifiquem o cliente.",
+            "Um print da tela do sistema com os dados do cliente.",
+            "A reclamação completa, com nome, CPF e telefone do cliente.",
+            "A planilha inteira de reclamações do mês."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Para redigir a resposta, a IA precisa do problema, não de quem o relatou. Retirar os identificadores protege o cliente."
+        },
+        {
+          "ordem": 2,
+          "area": "DADOS",
+          "enunciado": "Qual destes é um dado pessoal sensível, segundo a LGPD?",
+          "alternativas": [
+            "O número da apólice.",
+            "A cidade onde o segurado mora.",
+            "A placa do veículo segurado.",
+            "Uma informação de saúde do segurado."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "A LGPD (art. 5º, II) lista saúde, origem racial, religião, biometria e outros como dados sensíveis, que exigem proteção reforçada."
+        },
+        {
+          "ordem": 3,
+          "area": "DADOS",
+          "enunciado": "Um colega sugere usar um assistente de IA gratuito, não aprovado pela empresa, para analisar laudos. Qual é a conduta adequada?",
+          "alternativas": [
+            "Usar apenas as ferramentas aprovadas pela empresa, que têm contrato e regras de tratamento de dados.",
+            "Usar, se for mais rápido.",
+            "Usar no celular pessoal.",
+            "Usar e apagar o histórico depois."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Ferramentas não aprovadas podem guardar e reutilizar o que você envia. Apagar o histórico não desfaz o envio."
+        },
+        {
+          "ordem": 4,
+          "area": "DADOS",
+          "enunciado": "O que significa anonimizar dados antes de usá-los com a IA?",
+          "alternativas": [
+            "Traduzir o texto para outro idioma.",
+            "Mudar a fonte do texto.",
+            "Colocar senha no arquivo.",
+            "Remover ou substituir as informações que permitem identificar a pessoa."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Anonimizar é impedir a identificação do titular. Senha protege o acesso ao arquivo, não o conteúdo que você envia à IA."
+        },
+        {
+          "ordem": 5,
+          "area": "DADOS",
+          "enunciado": "Para pedir à IA uma análise da tendência de sinistros por região, qual conjunto de dados é mais adequado?",
+          "alternativas": [
+            "Dados agregados por região e mês, sem identificação de segurados.",
+            "Os laudos médicos dos sinistros.",
+            "Os e-mails trocados com os clientes.",
+            "A base completa, com os nomes dos segurados."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Para ver tendência, bastam dados agregados. É o princípio da necessidade: usar só o que a tarefa exige."
+        },
+        {
+          "ordem": 6,
+          "area": "APLICACAO",
+          "enunciado": "Em qual tarefa do atendimento o assistente agrega mais valor com baixo risco?",
+          "alternativas": [
+            "Decidir coberturas em casos contestados.",
+            "Alterar dados cadastrais dos clientes.",
+            "Rascunhar respostas a dúvidas frequentes, revisadas antes do envio.",
+            "Aprovar indenizações."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "Rascunhos revisados economizam tempo e mantêm a decisão com a pessoa. Aprovar e decidir exigem responsabilidade humana."
+        },
+        {
+          "ordem": 7,
+          "area": "APLICACAO",
+          "enunciado": "No Financeiro, qual uso do assistente é adequado?",
+          "alternativas": [
+            "Aprovar reembolsos.",
+            "Lançar pagamentos diretamente no sistema.",
+            "Explicar uma fórmula de planilha ou sugerir a estrutura de uma conciliação.",
+            "Definir a provisão técnica sem revisão."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "A IA ajuda a entender e estruturar o trabalho; lançamentos e valores oficiais seguem os controles da área."
+        },
+        {
+          "ordem": 8,
+          "area": "APLICACAO",
+          "enunciado": "No Marketing, qual é um bom uso do assistente?",
+          "alternativas": [
+            "Publicar anúncios automaticamente.",
+            "Prometer coberturas não previstas para atrair clientes.",
+            "Gerar variações de texto para um teste A/B, revisando as promessas de cobertura.",
+            "Copiar campanhas de concorrentes."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "Variações de texto são um uso de baixo risco, desde que nenhuma peça prometa o que o produto não cobre."
+        },
+        {
+          "ordem": 9,
+          "area": "APLICACAO",
+          "enunciado": "Um cliente pede uma explicação sobre franquia. Como usar o assistente?",
+          "alternativas": [
+            "Copiar a resposta da IA sem ler.",
+            "Encaminhar o cliente para conversar com a IA.",
+            "Pedir uma explicação em linguagem simples, conferir com as condições do produto e adaptar ao caso.",
+            "Não responder e aguardar nova solicitação."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "A IA ajuda na linguagem; os valores e regras da franquia vêm do produto contratado."
+        },
+        {
+          "ordem": 10,
+          "area": "APLICACAO",
+          "enunciado": "Como medir se o assistente realmente ajuda na sua rotina?",
+          "alternativas": [
+            "Ver se os textos ficaram mais longos.",
+            "Perguntar à IA se ela ajudou.",
+            "Contar quantas vezes você abriu a ferramenta.",
+            "Comparar o tempo e a qualidade (retrabalho e erros) de uma tarefa definida, antes e depois."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Ganho real é fazer a mesma tarefa em menos tempo, sem piorar a qualidade. Uso frequente não é o mesmo que ganho."
+        }
+      ]
+    },
+    {
+      "codigo": "2A",
+      "titulo": "Formulação e verificação",
+      "nivel": 1,
+      "descricao": "5 questões de formulação de pedidos e 5 de verificação das respostas da IA.",
+      "questoes": [
+        {
+          "ordem": 1,
+          "area": "FORMULACAO",
+          "enunciado": "Por que começar o pedido com o contexto, como “sou analista de subscrição de seguro auto”, ajuda?",
+          "alternativas": [
+            "Orienta o vocabulário, o nível de detalhe e os exemplos para a sua realidade de trabalho.",
+            "Garante que a resposta estará correta.",
+            "Autoriza a IA a acessar os sistemas internos da empresa.",
+            "Faz a IA responder mais rápido."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "O contexto ajusta a resposta ao seu cenário, mas não garante que ela esteja correta e não dá acesso a sistemas."
+        },
+        {
+          "ordem": 2,
+          "area": "FORMULACAO",
+          "enunciado": "Você quer uma tabela comparando três planos de seguro residencial. O que o pedido deve trazer?",
+          "alternativas": [
+            "Um pedido para a IA buscar sozinha os preços dos concorrentes, sem conferir.",
+            "Apenas “compare os planos”.",
+            "As colunas desejadas (cobertura, franquia, preço) e os dados dos três planos.",
+            "O pedido em inglês, para melhorar o resultado."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "Quando você fornece os dados e a estrutura, a IA organiza em vez de inventar. Preços buscados pela IA podem estar errados ou desatualizados."
+        },
+        {
+          "ordem": 3,
+          "area": "FORMULACAO",
+          "enunciado": "Qual técnica mais ajuda o assistente a seguir o padrão de texto da empresa?",
+          "alternativas": [
+            "Repetir “siga o padrão” várias vezes.",
+            "Incluir no pedido um ou dois exemplos do padrão esperado.",
+            "Pedir sempre respostas curtas.",
+            "Escrever o pedido todo em letras maiúsculas."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Exemplos mostram o tom e a estrutura melhor do que qualquer descrição. É a técnica conhecida como “few-shot”."
+        },
+        {
+          "ordem": 4,
+          "area": "FORMULACAO",
+          "enunciado": "Um pedido mistura três tarefas: resumir uma apólice, calcular um prazo e redigir um e-mail ao cliente. Qual é a melhor abordagem?",
+          "alternativas": [
+            "Retirar o contexto para o pedido ficar mais curto.",
+            "Dividir em etapas e revisar o resultado de cada uma antes de seguir.",
+            "Mandar tudo junto e aceitar o que vier.",
+            "Pedir apenas o e-mail final, sem as etapas."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Dividir a tarefa facilita encontrar erros: um prazo errado na etapa 2 não contamina o e-mail sem que você perceba."
+        },
+        {
+          "ordem": 5,
+          "area": "FORMULACAO",
+          "enunciado": "O assistente respondeu com termos técnicos que o cliente não entenderia. Como pedir a reescrita?",
+          "alternativas": [
+            "“Simplifique.”",
+            "“Resuma em uma palavra.”",
+            "“Traduza.”",
+            "“Explique como se fosse para um cliente sem conhecimento de seguros, sem jargão e com um exemplo.”"
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Dizer quem é o leitor e o que evitar dá à IA um critério claro. “Simplifique” sozinho pode cortar informação importante."
+        },
+        {
+          "ordem": 6,
+          "area": "VERIFICACAO",
+          "enunciado": "Qual destes é um sinal de alerta em uma resposta da IA?",
+          "alternativas": [
+            "Números e datas muito precisos, sem indicação de onde vieram.",
+            "A resposta estar em português.",
+            "A resposta estar organizada em tópicos.",
+            "A resposta ser curta."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Precisão sem fonte é um padrão típico de informação inventada. Quanto mais específico o dado, mais importante conferir."
+        },
+        {
+          "ordem": 7,
+          "area": "VERIFICACAO",
+          "enunciado": "A IA calculou o valor de uma indenização proporcional. Qual verificação faz sentido?",
+          "alternativas": [
+            "Nenhuma: a IA não erra contas.",
+            "Refazer a conta com os dados da apólice ou pela calculadora do sistema.",
+            "Pedir que a IA explique o cálculo em outras palavras e aceitar.",
+            "Apenas arredondar o valor."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Modelos de linguagem erram aritmética com frequência. Valores que chegam ao cliente precisam de conferência independente."
+        },
+        {
+          "ordem": 8,
+          "area": "VERIFICACAO",
+          "enunciado": "Ao revisar um texto da IA que vai para um cliente, o que conferir primeiro?",
+          "alternativas": [
+            "Se o texto é longo o bastante.",
+            "Se os fatos (valores, prazos e coberturas) batem com o sistema e com o contrato.",
+            "Qual fonte a IA usou para o estilo.",
+            "Se o texto usa emojis."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Erros de fato geram reclamação e risco regulatório. O estilo pode ser ajustado depois."
+        },
+        {
+          "ordem": 9,
+          "area": "VERIFICACAO",
+          "enunciado": "A resposta da IA contradiz o manual interno de sinistros. O que prevalece?",
+          "alternativas": [
+            "Nenhum dos dois; decide quem estiver atendendo.",
+            "A resposta da IA, por ser mais recente.",
+            "O que for mais favorável ao cliente naquele momento.",
+            "O manual interno; a divergência deve ser registrada e comunicada."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "A IA não conhece as regras internas da empresa. Registrar a divergência ajuda a melhorar o uso da ferramenta."
+        },
+        {
+          "ordem": 10,
+          "area": "VERIFICACAO",
+          "enunciado": "O assistente respondeu: “O reembolso de despesas médicas é feito em até 5 dias úteis.” Antes de repassar essa resposta ao cliente, o que você deve fazer?",
+          "alternativas": [
+            "Pedir que a IA confirme o prazo e repassar se ela disser que sim.",
+            "Conferir o prazo nas condições gerais do produto e no sistema antes de informar o cliente.",
+            "Trocar o prazo por “em breve”, para não se comprometer.",
+            "Repassar, porque a informação parece razoável."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Prazo informado ao cliente vira compromisso. A IA não conhece o contrato do cliente, e a fonte é a condição geral do produto e o sistema."
+        }
+      ]
+    },
+    {
+      "codigo": "2B",
+      "titulo": "Dados e aplicação no setor",
+      "nivel": 1,
+      "descricao": "5 questões de uso seguro de dados e 5 de aplicação em tarefas do setor.",
+      "questoes": [
+        {
+          "ordem": 1,
+          "area": "DADOS",
+          "enunciado": "Um colega sugere usar um assistente de IA gratuito, não aprovado pela empresa, para analisar laudos. Qual é a conduta adequada?",
+          "alternativas": [
+            "Usar e apagar o histórico depois.",
+            "Usar no celular pessoal.",
+            "Usar apenas as ferramentas aprovadas pela empresa, que têm contrato e regras de tratamento de dados.",
+            "Usar, se for mais rápido."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "Ferramentas não aprovadas podem guardar e reutilizar o que você envia. Apagar o histórico não desfaz o envio."
+        },
+        {
+          "ordem": 2,
+          "area": "DADOS",
+          "enunciado": "O que significa anonimizar dados antes de usá-los com a IA?",
+          "alternativas": [
+            "Remover ou substituir as informações que permitem identificar a pessoa.",
+            "Mudar a fonte do texto.",
+            "Traduzir o texto para outro idioma.",
+            "Colocar senha no arquivo."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Anonimizar é impedir a identificação do titular. Senha protege o acesso ao arquivo, não o conteúdo que você envia à IA."
+        },
+        {
+          "ordem": 3,
+          "area": "DADOS",
+          "enunciado": "Para pedir à IA uma análise da tendência de sinistros por região, qual conjunto de dados é mais adequado?",
+          "alternativas": [
+            "A base completa, com os nomes dos segurados.",
+            "Os e-mails trocados com os clientes.",
+            "Os laudos médicos dos sinistros.",
+            "Dados agregados por região e mês, sem identificação de segurados."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Para ver tendência, bastam dados agregados. É o princípio da necessidade: usar só o que a tarefa exige."
+        },
+        {
+          "ordem": 4,
+          "area": "DADOS",
+          "enunciado": "Você colou por engano os dados de um cliente em uma ferramenta não autorizada. O que fazer?",
+          "alternativas": [
+            "Apagar o histórico e seguir normalmente.",
+            "Não contar a ninguém.",
+            "Esperar para ver se acontece algum problema.",
+            "Comunicar imediatamente a área de segurança da informação ou o encarregado de dados."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Incidentes com dados pessoais precisam ser avaliados rapidamente; a empresa pode ter de comunicar a ANPD e o titular."
+        },
+        {
+          "ordem": 5,
+          "area": "DADOS",
+          "enunciado": "Qual princípio da LGPD orienta usar apenas os dados estritamente necessários para a tarefa?",
+          "alternativas": [
+            "Livre concorrência.",
+            "Portabilidade.",
+            "Necessidade (minimização).",
+            "Publicidade."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "O princípio da necessidade (art. 6º, III) limita o tratamento ao mínimo indispensável para a finalidade."
+        },
+        {
+          "ordem": 6,
+          "area": "APLICACAO",
+          "enunciado": "No Marketing, qual é um bom uso do assistente?",
+          "alternativas": [
+            "Copiar campanhas de concorrentes.",
+            "Publicar anúncios automaticamente.",
+            "Prometer coberturas não previstas para atrair clientes.",
+            "Gerar variações de texto para um teste A/B, revisando as promessas de cobertura."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Variações de texto são um uso de baixo risco, desde que nenhuma peça prometa o que o produto não cobre."
+        },
+        {
+          "ordem": 7,
+          "area": "APLICACAO",
+          "enunciado": "Um cliente pede uma explicação sobre franquia. Como usar o assistente?",
+          "alternativas": [
+            "Não responder e aguardar nova solicitação.",
+            "Encaminhar o cliente para conversar com a IA.",
+            "Copiar a resposta da IA sem ler.",
+            "Pedir uma explicação em linguagem simples, conferir com as condições do produto e adaptar ao caso."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "A IA ajuda na linguagem; os valores e regras da franquia vêm do produto contratado."
+        },
+        {
+          "ordem": 8,
+          "area": "APLICACAO",
+          "enunciado": "Como medir se o assistente realmente ajuda na sua rotina?",
+          "alternativas": [
+            "Perguntar à IA se ela ajudou.",
+            "Contar quantas vezes você abriu a ferramenta.",
+            "Comparar o tempo e a qualidade (retrabalho e erros) de uma tarefa definida, antes e depois.",
+            "Ver se os textos ficaram mais longos."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "Ganho real é fazer a mesma tarefa em menos tempo, sem piorar a qualidade. Uso frequente não é o mesmo que ganho."
+        },
+        {
+          "ordem": 9,
+          "area": "APLICACAO",
+          "enunciado": "Qual destas tarefas deve continuar predominantemente humana?",
+          "alternativas": [
+            "Negociar um acordo com um cliente em um sinistro contestado.",
+            "Corrigir a ortografia de um texto.",
+            "Formatar uma tabela.",
+            "Gerar o primeiro rascunho de uma ata."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Negociação envolve julgamento, empatia e responsabilidade. As outras tarefas são mecânicas e se beneficiam da IA."
+        },
+        {
+          "ordem": 10,
+          "area": "APLICACAO",
+          "enunciado": "Você tem 40 e-mails parecidos de clientes sobre atraso na vistoria. Como o assistente pode ajudar?",
+          "alternativas": [
+            "Agrupar os temas principais e sugerir um modelo de resposta, que você revisa e personaliza.",
+            "Responder a todos automaticamente.",
+            "Encaminhar todos para o Marketing.",
+            "Apagar os e-mails repetidos."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "A IA acelera a análise e o rascunho; a resposta final continua sendo sua. Lembre de retirar os dados pessoais antes."
+        }
+      ]
+    },
+    {
+      "codigo": "3A",
+      "titulo": "Formulação e verificação",
+      "nivel": 1,
+      "descricao": "5 questões de formulação de pedidos e 5 de verificação das respostas da IA.",
+      "questoes": [
+        {
+          "ordem": 1,
+          "area": "FORMULACAO",
+          "enunciado": "Qual técnica mais ajuda o assistente a seguir o padrão de texto da empresa?",
+          "alternativas": [
+            "Incluir no pedido um ou dois exemplos do padrão esperado.",
+            "Pedir sempre respostas curtas.",
+            "Repetir “siga o padrão” várias vezes.",
+            "Escrever o pedido todo em letras maiúsculas."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Exemplos mostram o tom e a estrutura melhor do que qualquer descrição. É a técnica conhecida como “few-shot”."
+        },
+        {
+          "ordem": 2,
+          "area": "FORMULACAO",
+          "enunciado": "Um pedido mistura três tarefas: resumir uma apólice, calcular um prazo e redigir um e-mail ao cliente. Qual é a melhor abordagem?",
+          "alternativas": [
+            "Retirar o contexto para o pedido ficar mais curto.",
+            "Pedir apenas o e-mail final, sem as etapas.",
+            "Mandar tudo junto e aceitar o que vier.",
+            "Dividir em etapas e revisar o resultado de cada uma antes de seguir."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Dividir a tarefa facilita encontrar erros: um prazo errado na etapa 2 não contamina o e-mail sem que você perceba."
+        },
+        {
+          "ordem": 3,
+          "area": "FORMULACAO",
+          "enunciado": "O assistente respondeu com termos técnicos que o cliente não entenderia. Como pedir a reescrita?",
+          "alternativas": [
+            "“Explique como se fosse para um cliente sem conhecimento de seguros, sem jargão e com um exemplo.”",
+            "“Traduza.”",
+            "“Resuma em uma palavra.”",
+            "“Simplifique.”"
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Dizer quem é o leitor e o que evitar dá à IA um critério claro. “Simplifique” sozinho pode cortar informação importante."
+        },
+        {
+          "ordem": 4,
+          "area": "FORMULACAO",
+          "enunciado": "Quando vale pedir que o assistente faça perguntas antes de responder?",
+          "alternativas": [
+            "Apenas em textos em outro idioma.",
+            "Nunca: a IA deve deduzir o que falta.",
+            "Sempre, mesmo em tarefas simples.",
+            "Quando faltam informações essenciais e você quer que ele liste o que precisa saber."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Pedir que a IA pergunte evita respostas genéricas baseadas em suposições. Em tarefas simples, isso só atrasa."
+        },
+        {
+          "ordem": 5,
+          "area": "FORMULACAO",
+          "enunciado": "Você precisa de ideias de campanha para um seguro de vida voltado a jovens adultos. Qual pedido é mais adequado?",
+          "alternativas": [
+            "“Crie uma campanha que venda muito.”",
+            "“Qual é a melhor campanha do mundo?”",
+            "“Liste 5 ideias de campanha de seguro de vida para pessoas de 25 a 35 anos, com canal sugerido e mensagem principal.”",
+            "“Ideias.”"
+          ],
+          "indiceCorreto": 2,
+          "comentario": "Quantidade, público e formato transformam um pedido aberto em uma lista que dá para comparar e avaliar."
+        },
+        {
+          "ordem": 6,
+          "area": "VERIFICACAO",
+          "enunciado": "Ao revisar um texto da IA que vai para um cliente, o que conferir primeiro?",
+          "alternativas": [
+            "Se o texto usa emojis.",
+            "Se os fatos (valores, prazos e coberturas) batem com o sistema e com o contrato.",
+            "Se o texto é longo o bastante.",
+            "Qual fonte a IA usou para o estilo."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Erros de fato geram reclamação e risco regulatório. O estilo pode ser ajustado depois."
+        },
+        {
+          "ordem": 7,
+          "area": "VERIFICACAO",
+          "enunciado": "A resposta da IA contradiz o manual interno de sinistros. O que prevalece?",
+          "alternativas": [
+            "O manual interno; a divergência deve ser registrada e comunicada.",
+            "Nenhum dos dois; decide quem estiver atendendo.",
+            "A resposta da IA, por ser mais recente.",
+            "O que for mais favorável ao cliente naquele momento."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "A IA não conhece as regras internas da empresa. Registrar a divergência ajuda a melhorar o uso da ferramenta."
+        },
+        {
+          "ordem": 8,
+          "area": "VERIFICACAO",
+          "enunciado": "O assistente respondeu: “O reembolso de despesas médicas é feito em até 5 dias úteis.” Antes de repassar essa resposta ao cliente, o que você deve fazer?",
+          "alternativas": [
+            "Conferir o prazo nas condições gerais do produto e no sistema antes de informar o cliente.",
+            "Pedir que a IA confirme o prazo e repassar se ela disser que sim.",
+            "Repassar, porque a informação parece razoável.",
+            "Trocar o prazo por “em breve”, para não se comprometer."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Prazo informado ao cliente vira compromisso. A IA não conhece o contrato do cliente, e a fonte é a condição geral do produto e o sistema."
+        },
+        {
+          "ordem": 9,
+          "area": "VERIFICACAO",
+          "enunciado": "Em qual situação é aceitável usar a resposta da IA sem uma conferência detalhada?",
+          "alternativas": [
+            "Em pareceres enviados ao jurídico.",
+            "Em cálculos de indenização.",
+            "Em rascunhos internos de baixo risco, como ideias de título, que ainda vão passar por revisão.",
+            "Em respostas a reclamações formais."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "O nível de conferência deve acompanhar o risco: quanto maior o impacto no cliente ou na empresa, mais rigorosa a revisão."
+        },
+        {
+          "ordem": 10,
+          "area": "VERIFICACAO",
+          "enunciado": "A IA afirma que “segundo pesquisa recente, 80% dos clientes preferem atendimento por chat”. Como usar essa informação?",
+          "alternativas": [
+            "Incluir no relatório como dado.",
+            "Usar, mas arredondar para 75%.",
+            "Usar citando “fonte: IA”.",
+            "Só usar se encontrar a pesquisa original e confirmar o número."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Estatísticas sem fonte verificável não servem como evidência, e “fonte: IA” não é fonte."
+        }
+      ]
+    },
+    {
+      "codigo": "3B",
+      "titulo": "Dados e aplicação no setor",
+      "nivel": 1,
+      "descricao": "5 questões de uso seguro de dados e 5 de aplicação em tarefas do setor.",
+      "questoes": [
+        {
+          "ordem": 1,
+          "area": "DADOS",
+          "enunciado": "Para pedir à IA uma análise da tendência de sinistros por região, qual conjunto de dados é mais adequado?",
+          "alternativas": [
+            "Os e-mails trocados com os clientes.",
+            "A base completa, com os nomes dos segurados.",
+            "Os laudos médicos dos sinistros.",
+            "Dados agregados por região e mês, sem identificação de segurados."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Para ver tendência, bastam dados agregados. É o princípio da necessidade: usar só o que a tarefa exige."
+        },
+        {
+          "ordem": 2,
+          "area": "DADOS",
+          "enunciado": "Você colou por engano os dados de um cliente em uma ferramenta não autorizada. O que fazer?",
+          "alternativas": [
+            "Comunicar imediatamente a área de segurança da informação ou o encarregado de dados.",
+            "Apagar o histórico e seguir normalmente.",
+            "Não contar a ninguém.",
+            "Esperar para ver se acontece algum problema."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Incidentes com dados pessoais precisam ser avaliados rapidamente; a empresa pode ter de comunicar a ANPD e o titular."
+        },
+        {
+          "ordem": 3,
+          "area": "DADOS",
+          "enunciado": "Qual princípio da LGPD orienta usar apenas os dados estritamente necessários para a tarefa?",
+          "alternativas": [
+            "Publicidade.",
+            "Portabilidade.",
+            "Necessidade (minimização).",
+            "Livre concorrência."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "O princípio da necessidade (art. 6º, III) limita o tratamento ao mínimo indispensável para a finalidade."
+        },
+        {
+          "ordem": 4,
+          "area": "DADOS",
+          "enunciado": "A IA pode decidir sozinha a recusa de um sinistro?",
+          "alternativas": [
+            "Sim, se o cliente não reclamar.",
+            "Sim, desde que seja no seguro auto.",
+            "Não: decisões que afetam o cliente exigem análise humana, e o titular pode pedir revisão de decisões automatizadas.",
+            "Sim, se a taxa de acerto do modelo for alta."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "A LGPD (art. 20) garante ao titular o direito de pedir revisão de decisões tomadas só com base em tratamento automatizado."
+        },
+        {
+          "ordem": 5,
+          "area": "DADOS",
+          "enunciado": "Qual prática é segura ao pedir à IA um modelo de carta de cobrança?",
+          "alternativas": [
+            "Pedir o modelo com campos genéricos, como [NOME] e [VALOR], e preenchê-los no sistema oficial.",
+            "Incluir os dados bancários do cliente no pedido.",
+            "Colar o contrato assinado para a IA usar como base.",
+            "Enviar a lista de devedores para a IA preencher."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Modelos com campos genéricos dão o mesmo ganho de tempo sem expor nenhum dado pessoal."
+        },
+        {
+          "ordem": 6,
+          "area": "APLICACAO",
+          "enunciado": "Como medir se o assistente realmente ajuda na sua rotina?",
+          "alternativas": [
+            "Perguntar à IA se ela ajudou.",
+            "Ver se os textos ficaram mais longos.",
+            "Comparar o tempo e a qualidade (retrabalho e erros) de uma tarefa definida, antes e depois.",
+            "Contar quantas vezes você abriu a ferramenta."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "Ganho real é fazer a mesma tarefa em menos tempo, sem piorar a qualidade. Uso frequente não é o mesmo que ganho."
+        },
+        {
+          "ordem": 7,
+          "area": "APLICACAO",
+          "enunciado": "Qual destas tarefas deve continuar predominantemente humana?",
+          "alternativas": [
+            "Corrigir a ortografia de um texto.",
+            "Gerar o primeiro rascunho de uma ata.",
+            "Negociar um acordo com um cliente em um sinistro contestado.",
+            "Formatar uma tabela."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "Negociação envolve julgamento, empatia e responsabilidade. As outras tarefas são mecânicas e se beneficiam da IA."
+        },
+        {
+          "ordem": 8,
+          "area": "APLICACAO",
+          "enunciado": "Você tem 40 e-mails parecidos de clientes sobre atraso na vistoria. Como o assistente pode ajudar?",
+          "alternativas": [
+            "Responder a todos automaticamente.",
+            "Encaminhar todos para o Marketing.",
+            "Agrupar os temas principais e sugerir um modelo de resposta, que você revisa e personaliza.",
+            "Apagar os e-mails repetidos."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "A IA acelera a análise e o rascunho; a resposta final continua sendo sua. Lembre de retirar os dados pessoais antes."
+        },
+        {
+          "ordem": 9,
+          "area": "APLICACAO",
+          "enunciado": "O assistente sugere um fluxo novo para a abertura de sinistros. O que fazer com a sugestão?",
+          "alternativas": [
+            "Levar como proposta ao responsável pelo processo, com uma análise de riscos e das regras envolvidas.",
+            "Descartar sem ler.",
+            "Implementar sozinho no dia seguinte.",
+            "Divulgar o novo fluxo aos clientes."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Sugestões da IA são ponto de partida. Mudanças de processo passam por quem responde por ele."
+        },
+        {
+          "ordem": 10,
+          "area": "APLICACAO",
+          "enunciado": "Para preparar uma reunião com um corretor, o assistente pode:",
+          "alternativas": [
+            "Organizar uma pauta a partir dos pontos que você informar.",
+            "Consultar sozinho o histórico do corretor no sistema.",
+            "Garantir o cumprimento da meta.",
+            "Fechar o contrato com o corretor."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "O assistente trabalha com o que você fornece; ele não acessa os sistemas internos nem assume compromissos."
+        }
+      ]
+    },
+    {
+      "codigo": "4A",
+      "titulo": "Formulação e verificação",
+      "nivel": 1,
+      "descricao": "5 questões de formulação de pedidos e 5 de verificação das respostas da IA.",
+      "questoes": [
+        {
+          "ordem": 1,
+          "area": "FORMULACAO",
+          "enunciado": "O assistente respondeu com termos técnicos que o cliente não entenderia. Como pedir a reescrita?",
+          "alternativas": [
+            "“Resuma em uma palavra.”",
+            "“Traduza.”",
+            "“Explique como se fosse para um cliente sem conhecimento de seguros, sem jargão e com um exemplo.”",
+            "“Simplifique.”"
+          ],
+          "indiceCorreto": 2,
+          "comentario": "Dizer quem é o leitor e o que evitar dá à IA um critério claro. “Simplifique” sozinho pode cortar informação importante."
+        },
+        {
+          "ordem": 2,
+          "area": "FORMULACAO",
+          "enunciado": "Quando vale pedir que o assistente faça perguntas antes de responder?",
+          "alternativas": [
+            "Nunca: a IA deve deduzir o que falta.",
+            "Apenas em textos em outro idioma.",
+            "Sempre, mesmo em tarefas simples.",
+            "Quando faltam informações essenciais e você quer que ele liste o que precisa saber."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Pedir que a IA pergunte evita respostas genéricas baseadas em suposições. Em tarefas simples, isso só atrasa."
+        },
+        {
+          "ordem": 3,
+          "area": "FORMULACAO",
+          "enunciado": "Você precisa de ideias de campanha para um seguro de vida voltado a jovens adultos. Qual pedido é mais adequado?",
+          "alternativas": [
+            "“Ideias.”",
+            "“Liste 5 ideias de campanha de seguro de vida para pessoas de 25 a 35 anos, com canal sugerido e mensagem principal.”",
+            "“Qual é a melhor campanha do mundo?”",
+            "“Crie uma campanha que venda muito.”"
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Quantidade, público e formato transformam um pedido aberto em uma lista que dá para comparar e avaliar."
+        },
+        {
+          "ordem": 4,
+          "area": "FORMULACAO",
+          "enunciado": "Qual informação NÃO deve entrar em um pedido ao assistente, mesmo para dar contexto?",
+          "alternativas": [
+            "O CPF e os dados de saúde de um segurado específico.",
+            "O objetivo da tarefa.",
+            "O público que vai ler o texto.",
+            "O formato desejado para a resposta."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "O contexto útil descreve a tarefa, não a pessoa. Dados pessoais e sensíveis não são necessários para a IA ajudar."
+        },
+        {
+          "ordem": 5,
+          "area": "FORMULACAO",
+          "enunciado": "Um analista quer que o assistente resuma um relatório de sinistros para a diretoria. Qual pedido tende a gerar a resposta mais útil?",
+          "alternativas": [
+            "“Faça um resumo muito bom e completo.”",
+            "“Resuma isso.”",
+            "“Me diga o que você acha do relatório.”",
+            "“Resuma o relatório abaixo em até 5 tópicos, para a diretoria, destacando a variação da sinistralidade e as causas principais.”"
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Um bom pedido diz o público, o formato, o tamanho e o foco. Pedidos vagos obrigam a IA a adivinhar o que importa."
+        },
+        {
+          "ordem": 6,
+          "area": "VERIFICACAO",
+          "enunciado": "O assistente respondeu: “O reembolso de despesas médicas é feito em até 5 dias úteis.” Antes de repassar essa resposta ao cliente, o que você deve fazer?",
+          "alternativas": [
+            "Trocar o prazo por “em breve”, para não se comprometer.",
+            "Conferir o prazo nas condições gerais do produto e no sistema antes de informar o cliente.",
+            "Repassar, porque a informação parece razoável.",
+            "Pedir que a IA confirme o prazo e repassar se ela disser que sim."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Prazo informado ao cliente vira compromisso. A IA não conhece o contrato do cliente, e a fonte é a condição geral do produto e o sistema."
+        },
+        {
+          "ordem": 7,
+          "area": "VERIFICACAO",
+          "enunciado": "Em qual situação é aceitável usar a resposta da IA sem uma conferência detalhada?",
+          "alternativas": [
+            "Em respostas a reclamações formais.",
+            "Em rascunhos internos de baixo risco, como ideias de título, que ainda vão passar por revisão.",
+            "Em pareceres enviados ao jurídico.",
+            "Em cálculos de indenização."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "O nível de conferência deve acompanhar o risco: quanto maior o impacto no cliente ou na empresa, mais rigorosa a revisão."
+        },
+        {
+          "ordem": 8,
+          "area": "VERIFICACAO",
+          "enunciado": "A IA afirma que “segundo pesquisa recente, 80% dos clientes preferem atendimento por chat”. Como usar essa informação?",
+          "alternativas": [
+            "Usar, mas arredondar para 75%.",
+            "Incluir no relatório como dado.",
+            "Usar citando “fonte: IA”.",
+            "Só usar se encontrar a pesquisa original e confirmar o número."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Estatísticas sem fonte verificável não servem como evidência, e “fonte: IA” não é fonte."
+        },
+        {
+          "ordem": 9,
+          "area": "VERIFICACAO",
+          "enunciado": "Qual prática reduz o risco de erro ao usar a IA em tarefas repetidas?",
+          "alternativas": [
+            "Usar sempre o mesmo pedido, sem revisar.",
+            "Pedir respostas mais longas.",
+            "Pedir que a IA revise a si mesma e dispensar a conferência.",
+            "Usar um checklist de revisão com os pontos críticos: valores, prazos, nomes e cláusulas."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Um checklist torna a verificação um hábito rápido e evita que os erros passem justamente nas tarefas rotineiras."
+        },
+        {
+          "ordem": 10,
+          "area": "VERIFICACAO",
+          "enunciado": "O assistente cita a “Circular SUSEP nº 999/2023” como base para uma regra. O que fazer?",
+          "alternativas": [
+            "Perguntar à IA se ela tem certeza e aceitar o “sim”.",
+            "Conferir na fonte oficial se a norma existe e se diz isso antes de usar.",
+            "Trocar o número por outro parecido.",
+            "Citar a norma no parecer, já que a IA informou."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "A IA pode inventar referências com aparência real (a chamada alucinação). A confirmação da própria IA não é verificação."
+        }
+      ]
+    },
+    {
+      "codigo": "4B",
+      "titulo": "Dados e aplicação no setor",
+      "nivel": 1,
+      "descricao": "5 questões de uso seguro de dados e 5 de aplicação em tarefas do setor.",
+      "questoes": [
+        {
+          "ordem": 1,
+          "area": "DADOS",
+          "enunciado": "Qual princípio da LGPD orienta usar apenas os dados estritamente necessários para a tarefa?",
+          "alternativas": [
+            "Necessidade (minimização).",
+            "Publicidade.",
+            "Portabilidade.",
+            "Livre concorrência."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "O princípio da necessidade (art. 6º, III) limita o tratamento ao mínimo indispensável para a finalidade."
+        },
+        {
+          "ordem": 2,
+          "area": "DADOS",
+          "enunciado": "A IA pode decidir sozinha a recusa de um sinistro?",
+          "alternativas": [
+            "Sim, se o cliente não reclamar.",
+            "Não: decisões que afetam o cliente exigem análise humana, e o titular pode pedir revisão de decisões automatizadas.",
+            "Sim, se a taxa de acerto do modelo for alta.",
+            "Sim, desde que seja no seguro auto."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "A LGPD (art. 20) garante ao titular o direito de pedir revisão de decisões tomadas só com base em tratamento automatizado."
+        },
+        {
+          "ordem": 3,
+          "area": "DADOS",
+          "enunciado": "Qual prática é segura ao pedir à IA um modelo de carta de cobrança?",
+          "alternativas": [
+            "Incluir os dados bancários do cliente no pedido.",
+            "Enviar a lista de devedores para a IA preencher.",
+            "Colar o contrato assinado para a IA usar como base.",
+            "Pedir o modelo com campos genéricos, como [NOME] e [VALOR], e preenchê-los no sistema oficial."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Modelos com campos genéricos dão o mesmo ganho de tempo sem expor nenhum dado pessoal."
+        },
+        {
+          "ordem": 4,
+          "area": "DADOS",
+          "enunciado": "Um arquivo que você quer resumir tem a marcação “Confidencial – uso interno”. O que fazer?",
+          "alternativas": [
+            "Seguir a política de classificação: usar só a ferramenta aprovada para esse nível, ou não usar.",
+            "Remover a marcação e usar.",
+            "Resumir em qualquer ferramenta disponível.",
+            "Mandar o arquivo para o e-mail pessoal e resumir lá."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "A classificação da informação define onde ela pode circular. A ferramenta de IA também é um lugar por onde a informação passa."
+        },
+        {
+          "ordem": 5,
+          "area": "DADOS",
+          "enunciado": "Você quer ajuda do assistente para redigir a resposta a uma reclamação. O que colar no pedido?",
+          "alternativas": [
+            "A reclamação completa, com nome, CPF e telefone do cliente.",
+            "Um print da tela do sistema com os dados do cliente.",
+            "A planilha inteira de reclamações do mês.",
+            "O conteúdo da reclamação, sem dados que identifiquem o cliente."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Para redigir a resposta, a IA precisa do problema, não de quem o relatou. Retirar os identificadores protege o cliente."
+        },
+        {
+          "ordem": 6,
+          "area": "APLICACAO",
+          "enunciado": "Você tem 40 e-mails parecidos de clientes sobre atraso na vistoria. Como o assistente pode ajudar?",
+          "alternativas": [
+            "Apagar os e-mails repetidos.",
+            "Encaminhar todos para o Marketing.",
+            "Agrupar os temas principais e sugerir um modelo de resposta, que você revisa e personaliza.",
+            "Responder a todos automaticamente."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "A IA acelera a análise e o rascunho; a resposta final continua sendo sua. Lembre de retirar os dados pessoais antes."
+        },
+        {
+          "ordem": 7,
+          "area": "APLICACAO",
+          "enunciado": "O assistente sugere um fluxo novo para a abertura de sinistros. O que fazer com a sugestão?",
+          "alternativas": [
+            "Levar como proposta ao responsável pelo processo, com uma análise de riscos e das regras envolvidas.",
+            "Implementar sozinho no dia seguinte.",
+            "Divulgar o novo fluxo aos clientes.",
+            "Descartar sem ler."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Sugestões da IA são ponto de partida. Mudanças de processo passam por quem responde por ele."
+        },
+        {
+          "ordem": 8,
+          "area": "APLICACAO",
+          "enunciado": "Para preparar uma reunião com um corretor, o assistente pode:",
+          "alternativas": [
+            "Fechar o contrato com o corretor.",
+            "Consultar sozinho o histórico do corretor no sistema.",
+            "Garantir o cumprimento da meta.",
+            "Organizar uma pauta a partir dos pontos que você informar."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "O assistente trabalha com o que você fornece; ele não acessa os sistemas internos nem assume compromissos."
+        },
+        {
+          "ordem": 9,
+          "area": "APLICACAO",
+          "enunciado": "Qual situação indica que a tarefa NÃO se encaixa bem no assistente hoje?",
+          "alternativas": [
+            "Ela envolve escrever um texto.",
+            "Ela exige dados de sistemas internos que o assistente não acessa e uma decisão com responsabilidade legal.",
+            "Ela é repetitiva.",
+            "Ela envolve resumir um documento."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Reconhecer os limites da ferramenta faz parte do letramento: nem toda tarefa ganha com a IA."
+        },
+        {
+          "ordem": 10,
+          "area": "APLICACAO",
+          "enunciado": "Em qual tarefa do atendimento o assistente agrega mais valor com baixo risco?",
+          "alternativas": [
+            "Aprovar indenizações.",
+            "Alterar dados cadastrais dos clientes.",
+            "Rascunhar respostas a dúvidas frequentes, revisadas antes do envio.",
+            "Decidir coberturas em casos contestados."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "Rascunhos revisados economizam tempo e mantêm a decisão com a pessoa. Aprovar e decidir exigem responsabilidade humana."
+        }
+      ]
+    },
+    {
+      "codigo": "5A",
+      "titulo": "Formulação e verificação",
+      "nivel": 1,
+      "descricao": "5 questões de formulação de pedidos e 5 de verificação das respostas da IA.",
+      "questoes": [
+        {
+          "ordem": 1,
+          "area": "FORMULACAO",
+          "enunciado": "Você precisa de ideias de campanha para um seguro de vida voltado a jovens adultos. Qual pedido é mais adequado?",
+          "alternativas": [
+            "“Qual é a melhor campanha do mundo?”",
+            "“Liste 5 ideias de campanha de seguro de vida para pessoas de 25 a 35 anos, com canal sugerido e mensagem principal.”",
+            "“Ideias.”",
+            "“Crie uma campanha que venda muito.”"
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Quantidade, público e formato transformam um pedido aberto em uma lista que dá para comparar e avaliar."
+        },
+        {
+          "ordem": 2,
+          "area": "FORMULACAO",
+          "enunciado": "Qual informação NÃO deve entrar em um pedido ao assistente, mesmo para dar contexto?",
+          "alternativas": [
+            "O formato desejado para a resposta.",
+            "O CPF e os dados de saúde de um segurado específico.",
+            "O público que vai ler o texto.",
+            "O objetivo da tarefa."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "O contexto útil descreve a tarefa, não a pessoa. Dados pessoais e sensíveis não são necessários para a IA ajudar."
+        },
+        {
+          "ordem": 3,
+          "area": "FORMULACAO",
+          "enunciado": "Um analista quer que o assistente resuma um relatório de sinistros para a diretoria. Qual pedido tende a gerar a resposta mais útil?",
+          "alternativas": [
+            "“Resuma isso.”",
+            "“Me diga o que você acha do relatório.”",
+            "“Faça um resumo muito bom e completo.”",
+            "“Resuma o relatório abaixo em até 5 tópicos, para a diretoria, destacando a variação da sinistralidade e as causas principais.”"
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Um bom pedido diz o público, o formato, o tamanho e o foco. Pedidos vagos obrigam a IA a adivinhar o que importa."
+        },
+        {
+          "ordem": 4,
+          "area": "FORMULACAO",
+          "enunciado": "Você pediu ao assistente um e-mail de resposta a um segurado e o texto veio formal demais. Qual é o melhor próximo passo?",
+          "alternativas": [
+            "Escrever apenas “melhore”.",
+            "Refinar o pedido: “Reescreva em tom cordial e direto, com no máximo 120 palavras, mantendo as informações do prazo.”",
+            "Desistir do assistente e escrever tudo do zero.",
+            "Repetir o mesmo pedido, com as mesmas palavras."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Refinar com instruções concretas (tom, tamanho, o que manter) costuma resolver em uma rodada. “Melhore” não diz o que mudar."
+        },
+        {
+          "ordem": 5,
+          "area": "FORMULACAO",
+          "enunciado": "Por que começar o pedido com o contexto, como “sou analista de subscrição de seguro auto”, ajuda?",
+          "alternativas": [
+            "Faz a IA responder mais rápido.",
+            "Autoriza a IA a acessar os sistemas internos da empresa.",
+            "Garante que a resposta estará correta.",
+            "Orienta o vocabulário, o nível de detalhe e os exemplos para a sua realidade de trabalho."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "O contexto ajusta a resposta ao seu cenário, mas não garante que ela esteja correta e não dá acesso a sistemas."
+        },
+        {
+          "ordem": 6,
+          "area": "VERIFICACAO",
+          "enunciado": "A IA afirma que “segundo pesquisa recente, 80% dos clientes preferem atendimento por chat”. Como usar essa informação?",
+          "alternativas": [
+            "Usar, mas arredondar para 75%.",
+            "Incluir no relatório como dado.",
+            "Só usar se encontrar a pesquisa original e confirmar o número.",
+            "Usar citando “fonte: IA”."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "Estatísticas sem fonte verificável não servem como evidência, e “fonte: IA” não é fonte."
+        },
+        {
+          "ordem": 7,
+          "area": "VERIFICACAO",
+          "enunciado": "Qual prática reduz o risco de erro ao usar a IA em tarefas repetidas?",
+          "alternativas": [
+            "Usar um checklist de revisão com os pontos críticos: valores, prazos, nomes e cláusulas.",
+            "Pedir respostas mais longas.",
+            "Usar sempre o mesmo pedido, sem revisar.",
+            "Pedir que a IA revise a si mesma e dispensar a conferência."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Um checklist torna a verificação um hábito rápido e evita que os erros passem justamente nas tarefas rotineiras."
+        },
+        {
+          "ordem": 8,
+          "area": "VERIFICACAO",
+          "enunciado": "O assistente cita a “Circular SUSEP nº 999/2023” como base para uma regra. O que fazer?",
+          "alternativas": [
+            "Conferir na fonte oficial se a norma existe e se diz isso antes de usar.",
+            "Citar a norma no parecer, já que a IA informou.",
+            "Perguntar à IA se ela tem certeza e aceitar o “sim”.",
+            "Trocar o número por outro parecido."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "A IA pode inventar referências com aparência real (a chamada alucinação). A confirmação da própria IA não é verificação."
+        },
+        {
+          "ordem": 9,
+          "area": "VERIFICACAO",
+          "enunciado": "Um resumo feito pela IA diz que a apólice cobre alagamento. Como verificar?",
+          "alternativas": [
+            "Pedir outro resumo e ver se a informação se repete.",
+            "Perguntar a um colega se ele acha que cobre.",
+            "Confiar, porque o resumo estava bem escrito.",
+            "Localizar a cláusula na apólice original e comparar com o resumo."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Texto bem escrito não significa texto correto. A fonte da verdade é o documento original."
+        },
+        {
+          "ordem": 10,
+          "area": "VERIFICACAO",
+          "enunciado": "Qual destes é um sinal de alerta em uma resposta da IA?",
+          "alternativas": [
+            "A resposta ser curta.",
+            "A resposta estar organizada em tópicos.",
+            "A resposta estar em português.",
+            "Números e datas muito precisos, sem indicação de onde vieram."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Precisão sem fonte é um padrão típico de informação inventada. Quanto mais específico o dado, mais importante conferir."
+        }
+      ]
+    },
+    {
+      "codigo": "5B",
+      "titulo": "Dados e aplicação no setor",
+      "nivel": 1,
+      "descricao": "5 questões de uso seguro de dados e 5 de aplicação em tarefas do setor.",
+      "questoes": [
+        {
+          "ordem": 1,
+          "area": "DADOS",
+          "enunciado": "Qual prática é segura ao pedir à IA um modelo de carta de cobrança?",
+          "alternativas": [
+            "Colar o contrato assinado para a IA usar como base.",
+            "Incluir os dados bancários do cliente no pedido.",
+            "Enviar a lista de devedores para a IA preencher.",
+            "Pedir o modelo com campos genéricos, como [NOME] e [VALOR], e preenchê-los no sistema oficial."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Modelos com campos genéricos dão o mesmo ganho de tempo sem expor nenhum dado pessoal."
+        },
+        {
+          "ordem": 2,
+          "area": "DADOS",
+          "enunciado": "Um arquivo que você quer resumir tem a marcação “Confidencial – uso interno”. O que fazer?",
+          "alternativas": [
+            "Remover a marcação e usar.",
+            "Seguir a política de classificação: usar só a ferramenta aprovada para esse nível, ou não usar.",
+            "Mandar o arquivo para o e-mail pessoal e resumir lá.",
+            "Resumir em qualquer ferramenta disponível."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "A classificação da informação define onde ela pode circular. A ferramenta de IA também é um lugar por onde a informação passa."
+        },
+        {
+          "ordem": 3,
+          "area": "DADOS",
+          "enunciado": "Você quer ajuda do assistente para redigir a resposta a uma reclamação. O que colar no pedido?",
+          "alternativas": [
+            "O conteúdo da reclamação, sem dados que identifiquem o cliente.",
+            "Um print da tela do sistema com os dados do cliente.",
+            "A planilha inteira de reclamações do mês.",
+            "A reclamação completa, com nome, CPF e telefone do cliente."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Para redigir a resposta, a IA precisa do problema, não de quem o relatou. Retirar os identificadores protege o cliente."
+        },
+        {
+          "ordem": 4,
+          "area": "DADOS",
+          "enunciado": "Qual destes é um dado pessoal sensível, segundo a LGPD?",
+          "alternativas": [
+            "Uma informação de saúde do segurado.",
+            "A cidade onde o segurado mora.",
+            "A placa do veículo segurado.",
+            "O número da apólice."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "A LGPD (art. 5º, II) lista saúde, origem racial, religião, biometria e outros como dados sensíveis, que exigem proteção reforçada."
+        },
+        {
+          "ordem": 5,
+          "area": "DADOS",
+          "enunciado": "Um colega sugere usar um assistente de IA gratuito, não aprovado pela empresa, para analisar laudos. Qual é a conduta adequada?",
+          "alternativas": [
+            "Usar e apagar o histórico depois.",
+            "Usar apenas as ferramentas aprovadas pela empresa, que têm contrato e regras de tratamento de dados.",
+            "Usar no celular pessoal.",
+            "Usar, se for mais rápido."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Ferramentas não aprovadas podem guardar e reutilizar o que você envia. Apagar o histórico não desfaz o envio."
+        },
+        {
+          "ordem": 6,
+          "area": "APLICACAO",
+          "enunciado": "Para preparar uma reunião com um corretor, o assistente pode:",
+          "alternativas": [
+            "Organizar uma pauta a partir dos pontos que você informar.",
+            "Fechar o contrato com o corretor.",
+            "Garantir o cumprimento da meta.",
+            "Consultar sozinho o histórico do corretor no sistema."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "O assistente trabalha com o que você fornece; ele não acessa os sistemas internos nem assume compromissos."
+        },
+        {
+          "ordem": 7,
+          "area": "APLICACAO",
+          "enunciado": "Qual situação indica que a tarefa NÃO se encaixa bem no assistente hoje?",
+          "alternativas": [
+            "Ela envolve resumir um documento.",
+            "Ela é repetitiva.",
+            "Ela envolve escrever um texto.",
+            "Ela exige dados de sistemas internos que o assistente não acessa e uma decisão com responsabilidade legal."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Reconhecer os limites da ferramenta faz parte do letramento: nem toda tarefa ganha com a IA."
+        },
+        {
+          "ordem": 8,
+          "area": "APLICACAO",
+          "enunciado": "Em qual tarefa do atendimento o assistente agrega mais valor com baixo risco?",
+          "alternativas": [
+            "Decidir coberturas em casos contestados.",
+            "Rascunhar respostas a dúvidas frequentes, revisadas antes do envio.",
+            "Alterar dados cadastrais dos clientes.",
+            "Aprovar indenizações."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Rascunhos revisados economizam tempo e mantêm a decisão com a pessoa. Aprovar e decidir exigem responsabilidade humana."
+        },
+        {
+          "ordem": 9,
+          "area": "APLICACAO",
+          "enunciado": "No Financeiro, qual uso do assistente é adequado?",
+          "alternativas": [
+            "Explicar uma fórmula de planilha ou sugerir a estrutura de uma conciliação.",
+            "Lançar pagamentos diretamente no sistema.",
+            "Definir a provisão técnica sem revisão.",
+            "Aprovar reembolsos."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "A IA ajuda a entender e estruturar o trabalho; lançamentos e valores oficiais seguem os controles da área."
+        },
+        {
+          "ordem": 10,
+          "area": "APLICACAO",
+          "enunciado": "No Marketing, qual é um bom uso do assistente?",
+          "alternativas": [
+            "Gerar variações de texto para um teste A/B, revisando as promessas de cobertura.",
+            "Publicar anúncios automaticamente.",
+            "Prometer coberturas não previstas para atrair clientes.",
+            "Copiar campanhas de concorrentes."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Variações de texto são um uso de baixo risco, desde que nenhuma peça prometa o que o produto não cobre."
+        }
+      ]
+    },
+    {
+      "codigo": "6A",
+      "titulo": "Formulação e verificação",
+      "nivel": 1,
+      "descricao": "5 questões de formulação de pedidos e 5 de verificação das respostas da IA.",
+      "questoes": [
+        {
+          "ordem": 1,
+          "area": "FORMULACAO",
+          "enunciado": "Um analista quer que o assistente resuma um relatório de sinistros para a diretoria. Qual pedido tende a gerar a resposta mais útil?",
+          "alternativas": [
+            "“Resuma o relatório abaixo em até 5 tópicos, para a diretoria, destacando a variação da sinistralidade e as causas principais.”",
+            "“Faça um resumo muito bom e completo.”",
+            "“Resuma isso.”",
+            "“Me diga o que você acha do relatório.”"
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Um bom pedido diz o público, o formato, o tamanho e o foco. Pedidos vagos obrigam a IA a adivinhar o que importa."
+        },
+        {
+          "ordem": 2,
+          "area": "FORMULACAO",
+          "enunciado": "Você pediu ao assistente um e-mail de resposta a um segurado e o texto veio formal demais. Qual é o melhor próximo passo?",
+          "alternativas": [
+            "Desistir do assistente e escrever tudo do zero.",
+            "Refinar o pedido: “Reescreva em tom cordial e direto, com no máximo 120 palavras, mantendo as informações do prazo.”",
+            "Repetir o mesmo pedido, com as mesmas palavras.",
+            "Escrever apenas “melhore”."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Refinar com instruções concretas (tom, tamanho, o que manter) costuma resolver em uma rodada. “Melhore” não diz o que mudar."
+        },
+        {
+          "ordem": 3,
+          "area": "FORMULACAO",
+          "enunciado": "Por que começar o pedido com o contexto, como “sou analista de subscrição de seguro auto”, ajuda?",
+          "alternativas": [
+            "Autoriza a IA a acessar os sistemas internos da empresa.",
+            "Garante que a resposta estará correta.",
+            "Orienta o vocabulário, o nível de detalhe e os exemplos para a sua realidade de trabalho.",
+            "Faz a IA responder mais rápido."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "O contexto ajusta a resposta ao seu cenário, mas não garante que ela esteja correta e não dá acesso a sistemas."
+        },
+        {
+          "ordem": 4,
+          "area": "FORMULACAO",
+          "enunciado": "Você quer uma tabela comparando três planos de seguro residencial. O que o pedido deve trazer?",
+          "alternativas": [
+            "Um pedido para a IA buscar sozinha os preços dos concorrentes, sem conferir.",
+            "O pedido em inglês, para melhorar o resultado.",
+            "Apenas “compare os planos”.",
+            "As colunas desejadas (cobertura, franquia, preço) e os dados dos três planos."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Quando você fornece os dados e a estrutura, a IA organiza em vez de inventar. Preços buscados pela IA podem estar errados ou desatualizados."
+        },
+        {
+          "ordem": 5,
+          "area": "FORMULACAO",
+          "enunciado": "Qual técnica mais ajuda o assistente a seguir o padrão de texto da empresa?",
+          "alternativas": [
+            "Repetir “siga o padrão” várias vezes.",
+            "Escrever o pedido todo em letras maiúsculas.",
+            "Incluir no pedido um ou dois exemplos do padrão esperado.",
+            "Pedir sempre respostas curtas."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "Exemplos mostram o tom e a estrutura melhor do que qualquer descrição. É a técnica conhecida como “few-shot”."
+        },
+        {
+          "ordem": 6,
+          "area": "VERIFICACAO",
+          "enunciado": "O assistente cita a “Circular SUSEP nº 999/2023” como base para uma regra. O que fazer?",
+          "alternativas": [
+            "Conferir na fonte oficial se a norma existe e se diz isso antes de usar.",
+            "Citar a norma no parecer, já que a IA informou.",
+            "Trocar o número por outro parecido.",
+            "Perguntar à IA se ela tem certeza e aceitar o “sim”."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "A IA pode inventar referências com aparência real (a chamada alucinação). A confirmação da própria IA não é verificação."
+        },
+        {
+          "ordem": 7,
+          "area": "VERIFICACAO",
+          "enunciado": "Um resumo feito pela IA diz que a apólice cobre alagamento. Como verificar?",
+          "alternativas": [
+            "Pedir outro resumo e ver se a informação se repete.",
+            "Perguntar a um colega se ele acha que cobre.",
+            "Confiar, porque o resumo estava bem escrito.",
+            "Localizar a cláusula na apólice original e comparar com o resumo."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Texto bem escrito não significa texto correto. A fonte da verdade é o documento original."
+        },
+        {
+          "ordem": 8,
+          "area": "VERIFICACAO",
+          "enunciado": "Qual destes é um sinal de alerta em uma resposta da IA?",
+          "alternativas": [
+            "Números e datas muito precisos, sem indicação de onde vieram.",
+            "A resposta estar em português.",
+            "A resposta ser curta.",
+            "A resposta estar organizada em tópicos."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Precisão sem fonte é um padrão típico de informação inventada. Quanto mais específico o dado, mais importante conferir."
+        },
+        {
+          "ordem": 9,
+          "area": "VERIFICACAO",
+          "enunciado": "A IA calculou o valor de uma indenização proporcional. Qual verificação faz sentido?",
+          "alternativas": [
+            "Refazer a conta com os dados da apólice ou pela calculadora do sistema.",
+            "Apenas arredondar o valor.",
+            "Pedir que a IA explique o cálculo em outras palavras e aceitar.",
+            "Nenhuma: a IA não erra contas."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Modelos de linguagem erram aritmética com frequência. Valores que chegam ao cliente precisam de conferência independente."
+        },
+        {
+          "ordem": 10,
+          "area": "VERIFICACAO",
+          "enunciado": "Ao revisar um texto da IA que vai para um cliente, o que conferir primeiro?",
+          "alternativas": [
+            "Qual fonte a IA usou para o estilo.",
+            "Se o texto usa emojis.",
+            "Se os fatos (valores, prazos e coberturas) batem com o sistema e com o contrato.",
+            "Se o texto é longo o bastante."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "Erros de fato geram reclamação e risco regulatório. O estilo pode ser ajustado depois."
+        }
+      ]
+    },
+    {
+      "codigo": "6B",
+      "titulo": "Dados e aplicação no setor",
+      "nivel": 1,
+      "descricao": "5 questões de uso seguro de dados e 5 de aplicação em tarefas do setor.",
+      "questoes": [
+        {
+          "ordem": 1,
+          "area": "DADOS",
+          "enunciado": "Você quer ajuda do assistente para redigir a resposta a uma reclamação. O que colar no pedido?",
+          "alternativas": [
+            "A planilha inteira de reclamações do mês.",
+            "O conteúdo da reclamação, sem dados que identifiquem o cliente.",
+            "A reclamação completa, com nome, CPF e telefone do cliente.",
+            "Um print da tela do sistema com os dados do cliente."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Para redigir a resposta, a IA precisa do problema, não de quem o relatou. Retirar os identificadores protege o cliente."
+        },
+        {
+          "ordem": 2,
+          "area": "DADOS",
+          "enunciado": "Qual destes é um dado pessoal sensível, segundo a LGPD?",
+          "alternativas": [
+            "O número da apólice.",
+            "A placa do veículo segurado.",
+            "A cidade onde o segurado mora.",
+            "Uma informação de saúde do segurado."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "A LGPD (art. 5º, II) lista saúde, origem racial, religião, biometria e outros como dados sensíveis, que exigem proteção reforçada."
+        },
+        {
+          "ordem": 3,
+          "area": "DADOS",
+          "enunciado": "Um colega sugere usar um assistente de IA gratuito, não aprovado pela empresa, para analisar laudos. Qual é a conduta adequada?",
+          "alternativas": [
+            "Usar apenas as ferramentas aprovadas pela empresa, que têm contrato e regras de tratamento de dados.",
+            "Usar, se for mais rápido.",
+            "Usar no celular pessoal.",
+            "Usar e apagar o histórico depois."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Ferramentas não aprovadas podem guardar e reutilizar o que você envia. Apagar o histórico não desfaz o envio."
+        },
+        {
+          "ordem": 4,
+          "area": "DADOS",
+          "enunciado": "O que significa anonimizar dados antes de usá-los com a IA?",
+          "alternativas": [
+            "Colocar senha no arquivo.",
+            "Remover ou substituir as informações que permitem identificar a pessoa.",
+            "Mudar a fonte do texto.",
+            "Traduzir o texto para outro idioma."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Anonimizar é impedir a identificação do titular. Senha protege o acesso ao arquivo, não o conteúdo que você envia à IA."
+        },
+        {
+          "ordem": 5,
+          "area": "DADOS",
+          "enunciado": "Para pedir à IA uma análise da tendência de sinistros por região, qual conjunto de dados é mais adequado?",
+          "alternativas": [
+            "A base completa, com os nomes dos segurados.",
+            "Os e-mails trocados com os clientes.",
+            "Os laudos médicos dos sinistros.",
+            "Dados agregados por região e mês, sem identificação de segurados."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Para ver tendência, bastam dados agregados. É o princípio da necessidade: usar só o que a tarefa exige."
+        },
+        {
+          "ordem": 6,
+          "area": "APLICACAO",
+          "enunciado": "Em qual tarefa do atendimento o assistente agrega mais valor com baixo risco?",
+          "alternativas": [
+            "Decidir coberturas em casos contestados.",
+            "Aprovar indenizações.",
+            "Alterar dados cadastrais dos clientes.",
+            "Rascunhar respostas a dúvidas frequentes, revisadas antes do envio."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Rascunhos revisados economizam tempo e mantêm a decisão com a pessoa. Aprovar e decidir exigem responsabilidade humana."
+        },
+        {
+          "ordem": 7,
+          "area": "APLICACAO",
+          "enunciado": "No Financeiro, qual uso do assistente é adequado?",
+          "alternativas": [
+            "Aprovar reembolsos.",
+            "Explicar uma fórmula de planilha ou sugerir a estrutura de uma conciliação.",
+            "Definir a provisão técnica sem revisão.",
+            "Lançar pagamentos diretamente no sistema."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "A IA ajuda a entender e estruturar o trabalho; lançamentos e valores oficiais seguem os controles da área."
+        },
+        {
+          "ordem": 8,
+          "area": "APLICACAO",
+          "enunciado": "No Marketing, qual é um bom uso do assistente?",
+          "alternativas": [
+            "Gerar variações de texto para um teste A/B, revisando as promessas de cobertura.",
+            "Publicar anúncios automaticamente.",
+            "Prometer coberturas não previstas para atrair clientes.",
+            "Copiar campanhas de concorrentes."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "Variações de texto são um uso de baixo risco, desde que nenhuma peça prometa o que o produto não cobre."
+        },
+        {
+          "ordem": 9,
+          "area": "APLICACAO",
+          "enunciado": "Um cliente pede uma explicação sobre franquia. Como usar o assistente?",
+          "alternativas": [
+            "Pedir uma explicação em linguagem simples, conferir com as condições do produto e adaptar ao caso.",
+            "Não responder e aguardar nova solicitação.",
+            "Copiar a resposta da IA sem ler.",
+            "Encaminhar o cliente para conversar com a IA."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "A IA ajuda na linguagem; os valores e regras da franquia vêm do produto contratado."
+        },
+        {
+          "ordem": 10,
+          "area": "APLICACAO",
+          "enunciado": "Como medir se o assistente realmente ajuda na sua rotina?",
+          "alternativas": [
+            "Perguntar à IA se ela ajudou.",
+            "Contar quantas vezes você abriu a ferramenta.",
+            "Ver se os textos ficaram mais longos.",
+            "Comparar o tempo e a qualidade (retrabalho e erros) de uma tarefa definida, antes e depois."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "Ganho real é fazer a mesma tarefa em menos tempo, sem piorar a qualidade. Uso frequente não é o mesmo que ganho."
+        }
+      ]
+    },
+    {
+      "codigo": "TRILHA-VERIFICACAO",
+      "titulo": "Trilha verificação – situações do Atendimento",
+      "nivel": 1,
+      "descricao": "Mesmo nível e mesma divisão da atividade A, com a verificação em situações de atendimento ao cliente de seguros.",
+      "questoes": [
+        {
+          "ordem": 1,
+          "area": "FORMULACAO",
+          "enunciado": "Você precisa de ideias de campanha para um seguro de vida voltado a jovens adultos. Qual pedido é mais adequado?",
+          "alternativas": [
+            "“Qual é a melhor campanha do mundo?”",
+            "“Crie uma campanha que venda muito.”",
+            "“Liste 5 ideias de campanha de seguro de vida para pessoas de 25 a 35 anos, com canal sugerido e mensagem principal.”",
+            "“Ideias.”"
+          ],
+          "indiceCorreto": 2,
+          "comentario": "Quantidade, público e formato transformam um pedido aberto em uma lista que dá para comparar e avaliar."
+        },
+        {
+          "ordem": 2,
+          "area": "FORMULACAO",
+          "enunciado": "Qual informação NÃO deve entrar em um pedido ao assistente, mesmo para dar contexto?",
+          "alternativas": [
+            "O público que vai ler o texto.",
+            "O CPF e os dados de saúde de um segurado específico.",
+            "O formato desejado para a resposta.",
+            "O objetivo da tarefa."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "O contexto útil descreve a tarefa, não a pessoa. Dados pessoais e sensíveis não são necessários para a IA ajudar."
+        },
+        {
+          "ordem": 3,
+          "area": "FORMULACAO",
+          "enunciado": "Um analista quer que o assistente resuma um relatório de sinistros para a diretoria. Qual pedido tende a gerar a resposta mais útil?",
+          "alternativas": [
+            "“Faça um resumo muito bom e completo.”",
+            "“Me diga o que você acha do relatório.”",
+            "“Resuma o relatório abaixo em até 5 tópicos, para a diretoria, destacando a variação da sinistralidade e as causas principais.”",
+            "“Resuma isso.”"
+          ],
+          "indiceCorreto": 2,
+          "comentario": "Um bom pedido diz o público, o formato, o tamanho e o foco. Pedidos vagos obrigam a IA a adivinhar o que importa."
+        },
+        {
+          "ordem": 4,
+          "area": "FORMULACAO",
+          "enunciado": "Você pediu ao assistente um e-mail de resposta a um segurado e o texto veio formal demais. Qual é o melhor próximo passo?",
+          "alternativas": [
+            "Escrever apenas “melhore”.",
+            "Refinar o pedido: “Reescreva em tom cordial e direto, com no máximo 120 palavras, mantendo as informações do prazo.”",
+            "Desistir do assistente e escrever tudo do zero.",
+            "Repetir o mesmo pedido, com as mesmas palavras."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Refinar com instruções concretas (tom, tamanho, o que manter) costuma resolver em uma rodada. “Melhore” não diz o que mudar."
+        },
+        {
+          "ordem": 5,
+          "area": "FORMULACAO",
+          "enunciado": "Por que começar o pedido com o contexto, como “sou analista de subscrição de seguro auto”, ajuda?",
+          "alternativas": [
+            "Faz a IA responder mais rápido.",
+            "Garante que a resposta estará correta.",
+            "Autoriza a IA a acessar os sistemas internos da empresa.",
+            "Orienta o vocabulário, o nível de detalhe e os exemplos para a sua realidade de trabalho."
+          ],
+          "indiceCorreto": 3,
+          "comentario": "O contexto ajusta a resposta ao seu cenário, mas não garante que ela esteja correta e não dá acesso a sistemas."
+        },
+        {
+          "ordem": 6,
+          "area": "VERIFICACAO",
+          "enunciado": "Um segurado de automóvel pergunta se o guincho é ilimitado. O assistente responde “sim, sem limite de quilometragem”. Antes de responder ao cliente, o que fazer?",
+          "alternativas": [
+            "Dizer que depende e encerrar o atendimento.",
+            "Repassar a resposta do assistente.",
+            "Confirmar o limite de quilometragem da assistência 24 horas no plano contratado.",
+            "Pedir à IA que reescreva a resposta mais curta."
+          ],
+          "indiceCorreto": 2,
+          "comentario": "Assistência 24 horas tem limites que variam por plano. Uma promessa errada vira custo ou reclamação."
+        },
+        {
+          "ordem": 7,
+          "area": "VERIFICACAO",
+          "enunciado": "O assistente redigiu: “Seu sinistro foi aprovado e o pagamento sai amanhã.” No sistema, o status é “em análise”. O que fazer?",
+          "alternativas": [
+            "Corrigir o texto para refletir o status real do sistema.",
+            "Enviar, porque o cliente vai ficar satisfeito.",
+            "Enviar agora e corrigir depois.",
+            "Remover apenas a data e enviar."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "O status oficial está no sistema. A IA não sabe em que etapa o processo está."
+        },
+        {
+          "ordem": 8,
+          "area": "VERIFICACAO",
+          "enunciado": "Para responder sobre a carência de um seguro de vida, o assistente cita 90 dias. Qual é a fonte certa para confirmar?",
+          "alternativas": [
+            "As condições gerais do produto contratado pelo cliente.",
+            "Um site de notícias.",
+            "A memória de um colega mais experiente.",
+            "Outra ferramenta de IA."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "A carência varia por produto e por cobertura. Só o contrato do cliente responde com segurança."
+        },
+        {
+          "ordem": 9,
+          "area": "VERIFICACAO",
+          "enunciado": "Um cliente reclama que a resposta anterior, feita com IA, informou uma cobertura errada. Qual é a conduta?",
+          "alternativas": [
+            "Reconhecer o erro, informar a cobertura correta com base no contrato e registrar o caso para revisão do uso da IA.",
+            "Dizer que o erro foi da ferramenta.",
+            "Manter a informação anterior.",
+            "Ignorar a reclamação."
+          ],
+          "indiceCorreto": 0,
+          "comentario": "A responsabilidade pela resposta é de quem a enviou. Registrar o caso ajuda o time a ajustar o checklist."
+        },
+        {
+          "ordem": 10,
+          "area": "VERIFICACAO",
+          "enunciado": "Qual é o checklist mínimo antes de enviar ao cliente uma resposta gerada com IA?",
+          "alternativas": [
+            "Conferir apenas a saudação.",
+            "Conferir dados do cliente, cobertura, valores, prazos e tom, comparando com o sistema e o contrato.",
+            "Conferir apenas a ortografia.",
+            "Nenhum, se a IA foi bem treinada."
+          ],
+          "indiceCorreto": 1,
+          "comentario": "Os pontos que geram reclamação são fatos: cobertura, valor e prazo. Ortografia é o menor dos riscos."
+        }
+      ]
+    }
+  ]
+}

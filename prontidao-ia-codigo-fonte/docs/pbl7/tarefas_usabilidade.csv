@@ -1,0 +1,9 @@
+﻿id;perfil;tarefa;criterio_sucesso;tempo_referencia_s_apenas_planejamento
+C01;colaborador;Entrar no sistema com credenciais demo;Login realizado sem ajuda;90
+C02;colaborador;Abrir e concluir quiz de 10 questões;Quiz concluído, resultado identificado;300
+C03;colaborador;Fazer check-in semanal;Dados enviados corretamente;150
+C04;colaborador;Encontrar histórico e interpretar desempenho;Indicar acerto e evolução;120
+G01;gestor;Encontrar grupo com divergência técnico/confiança;Selecionar Atendimento e explicar diferença;180
+G02;gestor;Localizar maior problema do Marketing;Reconhecer verificação crítica;180
+G03;gestor;Abrir recomendação e justificar decisão;Identificar motivo e intervenção;180
+G04;gestor;Ajustar escopo e acompanhar ciclos posteriores;Compreender escopo e evolução;240

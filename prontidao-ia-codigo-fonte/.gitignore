@@ -1,0 +1,18 @@
+.gradle/
+build/
+bin/
+out/
+!gradle/wrapper/gradle-wrapper.jar
+
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+node_modules/
+docs/evidencias/*.png
+
+# Versão congelada para demonstração (gerada com gradlew bootJar)
+demo-entrega/

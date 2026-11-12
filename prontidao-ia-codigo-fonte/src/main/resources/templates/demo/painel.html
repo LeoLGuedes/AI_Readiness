@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: pagina('Painel de demonstração', ~{::conteudo})}">
+<body>
+<th:block th:fragment="conteudo" th:remove="tag">
+<div>
+
+  <div class="page-head">
+    <div>
+      <h2>Painel de demonstração</h2>
+      <p>Controla o cenário simulado da seção 8. Nenhuma ação daqui grava indicador ou alerta direto:
+        tudo passa pelo fechamento do ciclo.</p>
+    </div>
+  </div>
+
+  <div class="alert success" role="status" th:if="${sucesso}"><span th:text="${sucesso}">Feito.</span></div>
+  <div class="alert danger" role="alert" th:if="${erro}"><span th:text="${erro}">Erro.</span></div>
+
+  <div class="grid grid-2 painel-demo">
+
+    <section class="card" aria-labelledby="titulo-ciclo">
+      <h3 id="titulo-ciclo">Ciclo aberto</h3>
+      <p th:if="${situacao.cicloAberto == null}" class="texto-mudo">
+        Nenhum ciclo aberto. Use “Restaurar cenário inicial” para recomeçar.</p>
+      <th:block th:if="${situacao.cicloAberto != null}">
+        <p class="ciclo-destaque">
+          <strong class="num" th:text="|Ciclo ${situacao.cicloAberto.numero} de ${totalDeCiclos}|">Ciclo 4 de 6</strong>
+          <span class="texto-mudo"
+                th:text="|${#temporals.format(situacao.cicloAberto.inicio, 'dd/MM')} a ${#temporals.format(situacao.cicloAberto.fim, 'dd/MM')}|">
+            22/09 a 28/09</span>
+        </p>
+        <div class="table-wrap">
+          <table class="tabela-compacta">
+            <thead>
+            <tr><th>Time</th><th class="num">Check-ins</th><th class="num">Atividades</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="t : ${situacao.times}">
+              <td th:text="${t.time}">Atendimento</td>
+              <td class="num" th:text="|${t.checkins} de ${t.membros}|">7 de 8</td>
+              <td class="num" th:text="|${t.atividades} de ${t.esperadas}|">12 de 16</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </th:block>
+    </section>
+
+    <section class="card" aria-labelledby="titulo-acoes">
+      <h3 id="titulo-acoes">Ações</h3>
+      <div class="acoes-demo">
+        <form th:action="@{/demo/restaurar}" method="post">
+          <button type="submit" class="btn btn-secondary">Restaurar cenário inicial</button>
+          <span class="helper">Ciclos 1 a 3 fechados e ciclo 4 aberto, sem as respostas da Carla.</span>
+        </form>
+        <form th:action="@{/demo/carla}" method="post">
+          <button type="submit" class="btn btn-secondary">Preencher pendências da Carla conforme o roteiro</button>
+          <span class="helper">Check-in (confiança 2, receio 4), 4A com 8 de 10 e 4B com 7 de 10.</span>
+        </form>
+        <form th:action="@{/demo/gerar-respostas}" method="post">
+          <button type="submit" class="btn btn-secondary">Gerar respostas simuladas do ciclo aberto</button>
+          <span class="helper">Só para quem ainda não respondeu.</span>
+        </form>
+        <form th:action="@{/demo/fechar-ciclo}" method="post">
+          <button type="submit" class="btn btn-primary">Fechar ciclo aberto</button>
+          <span class="helper">Calcula indicadores, aplica as regras e abre o próximo ciclo.</span>
+        </form>
+        <form th:action="@{/demo/avancar-ciclo}" method="post">
+          <button type="submit" class="btn btn-primary">Avançar um ciclo</button>
+          <span class="helper">Gera as respostas que faltam e fecha o ciclo.</span>
+        </form>
+      </div>
+    </section>
+
+  </div>
+
+  <section class="card registro-demo" aria-labelledby="titulo-registro">
+    <h3 id="titulo-registro">Registro de ações</h3>
+    <p class="texto-mudo" th:if="${#lists.isEmpty(acoes)}">Nenhuma ação executada desde que a aplicação subiu.</p>
+    <ol class="lista-limpa">
+      <li th:each="a : ${acoes}">
+        <span class="num texto-mudo" th:text="${a.hora}">14:02:10</span>
+        <strong th:text="${a.titulo}">Fechar ciclo aberto</strong>
+        <ul>
+          <li th:each="d : ${a.detalhes}" th:text="${d}">Ciclo 4 fechado.</li>
+        </ul>
+      </li>
+    </ol>
+  </section>
+
+</div>
+</th:block>
+</body>
+</html>

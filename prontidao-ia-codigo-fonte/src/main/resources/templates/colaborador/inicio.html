@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: pagina('Início', ~{::conteudo})}">
+<body>
+<th:block th:fragment="conteudo" th:remove="tag">
+<div>
+
+  <div class="page-head">
+    <div>
+      <h2 th:text="|Olá, ${usuarioLogado.primeiroNome}|">Olá</h2>
+      <p th:if="${semana.temCicloAberto()}">
+        <strong th:text="|Ciclo ${semana.ciclo.numero} de ${totalDeCiclos}|">Ciclo 4 de 6</strong>
+        <span th:text="|· ${#temporals.format(semana.ciclo.inicio, 'dd/MM')} a ${#temporals.format(semana.ciclo.fim, 'dd/MM')}|">
+          · 22/09 a 28/09</span>
+      </p>
+    </div>
+    <a class="btn btn-secondary" th:href="@{/meu-historico}">Meu histórico</a>
+  </div>
+
+  <div class="alert info" role="status" th:unless="${semana.temCicloAberto()}">
+    <span>Não há ciclo aberto no momento. As próximas pendências aparecem aqui quando o ciclo abrir.</span>
+  </div>
+
+  <th:block th:if="${semana.temCicloAberto()}">
+
+    <section class="card progresso-ciclo" aria-labelledby="titulo-progresso">
+      <div class="split">
+        <h3 id="titulo-progresso">Progresso do ciclo</h3>
+        <span class="num"
+              th:text="|${semana.concluidas()} de ${semana.total()} pendências concluídas|">1 de 3 pendências concluídas</span>
+      </div>
+      <div class="progress-track" role="progressbar" aria-label="Progresso do ciclo"
+           aria-valuemin="0" aria-valuemax="100" th:attr="aria-valuenow=${semana.percentual()}">
+        <div class="progress-fill" th:style="|width: ${semana.percentual()}%|"></div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="titulo-pendencias">
+      <h3 id="titulo-pendencias">Pendências da semana</h3>
+      <ul class="lista-limpa lista-pendencias">
+
+        <li class="pendencia">
+          <div>
+            <strong>Check-in semanal</strong>
+            <span class="texto-mudo">3 perguntas rápidas sobre como você está usando a IA.</span>
+          </div>
+          <span class="badge" th:classappend="${semana.checkinFeito} ? 'badge-success' : 'badge-warning'"
+                th:text="${semana.checkinFeito} ? 'Concluído' : 'Pendente'">Pendente</span>
+          <a class="btn btn-primary" th:unless="${semana.checkinFeito}" th:href="@{/checkin}">Fazer check-in</a>
+          <span class="pendencia-acao-vazia" th:if="${semana.checkinFeito}"></span>
+        </li>
+
+        <li class="pendencia" th:each="p : ${semana.atividades}">
+          <div>
+            <strong th:text="|Atividade ${p.codigo} · ${p.titulo}|">Atividade 4A · Formulação e verificação</strong>
+            <span class="texto-mudo" th:if="${p.concluida()}"
+                  th:text="|${p.acertos} de 10 acertos|">8 de 10 acertos</span>
+            <span class="texto-mudo" th:unless="${p.concluida()}">10 questões de múltipla escolha.</span>
+          </div>
+          <span class="badge"
+                th:classappend="${p.concluida()} ? 'badge-success' : (${p.situacao.name() == 'EM_ANDAMENTO'} ? 'badge-primary' : 'badge-warning')"
+                th:text="${p.situacao.rotulo}">Não iniciada</span>
+          <a class="btn" th:href="${p.concluida()} ? @{/atividades/{id}/resultado(id=${p.liberadaId})} : @{/atividades/{id}(id=${p.liberadaId})}"
+             th:classappend="${p.concluida()} ? 'btn-secondary' : 'btn-primary'"
+             th:text="${p.concluida()} ? 'Ver resultado' : (${p.situacao.name() == 'EM_ANDAMENTO'} ? 'Continuar' : 'Começar')">Começar</a>
+        </li>
+
+      </ul>
+    </section>
+
+  </th:block>
+
+  <div class="toast show" role="status" th:if="${sucesso}" th:text="${sucesso}" id="toast">Check-in enviado.</div>
+  <script th:if="${sucesso}">
+    setTimeout(function () { document.getElementById('toast').classList.remove('show'); }, 4000);
+  </script>
+
+</div>
+</th:block>
+</body>
+</html>

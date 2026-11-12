@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: pagina(|Resultado ${resultado.codigo}|, ~{::conteudo})}">
+<body>
+<th:block th:fragment="conteudo" th:remove="tag">
+<div class="question-card">
+
+  <div class="page-head">
+    <div>
+      <h2 th:text="|Resultado · Atividade ${resultado.codigo}|">Resultado · Atividade 4A</h2>
+      <p th:text="${resultado.titulo}">Formulação e verificação</p>
+    </div>
+    <a class="btn btn-secondary" th:href="@{/inicio}">Voltar ao início</a>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card kpi">
+      <div class="label">Acertos</div>
+      <div class="value" th:text="|${resultado.acertos} de ${resultado.total}|">8 de 10</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Tempo</div>
+      <div class="value" th:text="${resultado.duracaoFormatada()}">10 min 32 s</div>
+    </div>
+  </div>
+
+  <h3 class="titulo-secao">Gabarito comentado</h3>
+
+  <article class="card gabarito" th:each="item : ${resultado.itens}">
+    <div class="question-meta">
+      <span th:text="|Questão ${item.ordem} · ${item.area}|">Questão 1 · Formulação</span>
+      <span class="badge badge-alerta" th:classappend="${item.acertou()} ? 'badge-success' : 'badge-danger'"
+            th:text="${item.acertou()} ? 'Acertou' : 'Errou'">Acertou</span>
+    </div>
+    <p class="enunciado" th:text="${item.enunciado}">Enunciado</p>
+    <ul class="lista-limpa alternativas-corrigidas">
+      <li th:each="alt, i : ${item.alternativas}"
+          th:classappend="${i.index == item.correta} ? 'alt-correta' : (${i.index == item.escolhida} ? 'alt-errada' : '')">
+        <span th:text="${alt}">Alternativa</span>
+        <small th:if="${i.index == item.correta}">Resposta certa</small>
+        <small th:if="${i.index == item.escolhida and i.index != item.correta}">Sua resposta</small>
+        <small th:if="${i.index == item.escolhida and i.index == item.correta}"> · sua resposta</small>
+      </li>
+    </ul>
+    <p class="comentario"><strong>Por quê:</strong> <span th:text="${item.comentario}">Comentário</span></p>
+  </article>
+
+</div>
+</th:block>
+</body>
+</html>

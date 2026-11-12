@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entrar · Prontidão IA</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="app-shell">
+
+  <header class="topbar">
+    <span class="brand">
+      <span class="brand-mark" aria-hidden="true">PI</span>
+      <span>
+        Prontidão IA
+        <small>Seguradora Aurora</small>
+      </span>
+    </span>
+  </header>
+
+  <p class="faixa-demo" th:if="${ambienteDemo}" role="status">
+    Ambiente de demonstração: dados simulados
+  </p>
+
+  <main class="auth-wrap">
+    <div class="auth-card">
+      <h2>Entrar</h2>
+      <p>Acompanhamento da prontidão para IA generativa.</p>
+
+      <div class="alert danger" th:if="${erro}" role="alert">
+        <strong>E-mail ou senha incorretos.</strong>
+      </div>
+      <div class="alert success" th:if="${criado}" role="status">Cadastro criado. Entre com seu e-mail e senha.</div>
+      <div class="alert success" th:if="${atualizado}" role="status">Perfil atualizado. Faça login novamente.</div>
+      <div class="alert success" th:if="${excluido}" role="status">Conta excluída. Seu acesso foi encerrado.</div>
+      <div class="alert success" th:if="${saiu}" role="status">
+        <span>Você saiu da sua conta.</span>
+      </div>
+
+      <form th:action="@{/login}" method="post">
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" autocomplete="username" required autofocus>
+        </div>
+
+        <div class="form-group">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" name="senha" autocomplete="current-password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%">Entrar</button>
+      </form>
+
+      <a class="btn btn-secondary auth-secondary-action" th:href="@{/cadastro}">Criar nova conta de colaborador</a>
+      <div class="prototype-box" th:if="${ambienteDemo}">
+        <strong>Usuários de demonstração</strong>
+        <ul class="lista-limpa">
+          <li th:each="u : ${usuariosDemo}">
+            <b th:text="${u.nome}">Nome</b>
+            <span class="texto-mudo" th:text="${u.papel}">Papel</span><br>
+            <code th:text="${u.email}">email</code>
+          </li>
+        </ul>
+        <p class="helper" style="margin-bottom:0">
+          Senha de todos: <code th:text="${senhaDemo}">demo123</code>
+        </p>
+      </div>
+    </div>
+  </main>
+
+</div>
+</body>
+</html>

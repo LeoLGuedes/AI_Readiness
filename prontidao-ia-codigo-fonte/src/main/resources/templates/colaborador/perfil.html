@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: pagina('Meu perfil', ~{::conteudo})}">
+<body>
+<th:block th:fragment="conteudo" th:remove="tag">
+  <div>
+    <div class="page-head">
+      <div>
+        <h2>Meu perfil</h2>
+        <p>Consulte seus dados e seu departamento.</p>
+      </div>
+    </div>
+    <section class="card profile-card" aria-labelledby="dados-perfil">
+      <h3 id="dados-perfil">Dados do colaborador</h3>
+      <div class="alert info" th:unless="${dados.editavel}" role="status">
+        Esta é uma conta pré-configurada da demonstração. Para preservar o cenário, os dados não podem ser alterados ou excluídos. Crie uma conta nova para testar o CRUD.
+      </div>
+      <div class="alert info" th:if="${dados.editavel}" role="status">
+        Você pode alterar seus próprios dados. Por segurança, será necessário entrar novamente após salvar.
+      </div>
+      <div class="alert danger" th:if="${erroPerfil}" role="alert" th:text="${erroPerfil}"></div>
+      <form th:action="@{/perfil}" th:object="${perfil}" method="post">
+        <div class="alert danger" th:if="${#fields.hasErrors('*')}" role="alert">Revise os campos indicados.</div>
+        <div class="grid grid-2 profile-grid">
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input id="nome" type="text" th:field="*{nome}" maxlength="120" required th:readonly="${!dados.editavel}" th:classappend="${!dados.editavel} ? 'profile-readonly'">
+            <span class="form-error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+          </div>
+          <div class="form-group">
+            <label for="papel">Papel</label>
+            <input id="papel" value="Colaborador" readonly class="profile-readonly">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input id="email" type="email" th:field="*{email}" maxlength="160" required th:readonly="${!dados.editavel}" th:classappend="${!dados.editavel} ? 'profile-readonly'">
+          <span class="form-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        </div>
+        <div class="form-group">
+          <label for="departamentoId">Departamento</label>
+          <select id="departamentoId" th:field="*{departamentoId}" required th:disabled="${!dados.editavel}">
+            <option th:each="time : ${departamentos}" th:value="${time.id}" th:text="${time.nome}">Atendimento</option>
+          </select>
+          <span class="form-error" th:if="${#fields.hasErrors('departamentoId')}" th:errors="*{departamentoId}"></span>
+        </div>
+        <th:block th:if="${dados.editavel}">
+          <div class="form-group">
+            <label for="senhaAtual">Senha atual (obrigatória para salvar)</label>
+            <input id="senhaAtual" type="password" name="senhaAtual" required autocomplete="current-password">
+            <span class="form-error" th:if="${#fields.hasErrors('senhaAtual')}" th:errors="*{senhaAtual}"></span>
+          </div>
+          <div class="grid grid-2 profile-grid">
+            <div class="form-group">
+              <label for="novaSenha">Nova senha (opcional)</label>
+              <input id="novaSenha" type="password" name="novaSenha" minlength="8" maxlength="72" autocomplete="new-password">
+            </div>
+            <div class="form-group">
+              <label for="confirmacaoNovaSenha">Confirmar nova senha</label>
+              <input id="confirmacaoNovaSenha" type="password" name="confirmacaoNovaSenha" autocomplete="new-password">
+            </div>
+          </div>
+          <div class="form-actions"><button type="submit" class="btn btn-primary">Salvar alterações</button>
+          <a class="btn btn-secondary" th:href="@{/inicio}">Cancelar</a></div>
+        </th:block>
+      </form>
+    </section>
+    <section class="profile-danger" th:if="${dados.editavel}" aria-labelledby="titulo-excluir">
+      <h3 id="titulo-excluir">Excluir minha conta</h3>
+      <p>Esta operação encerra seu acesso e remove seus dados identificadores da conta, preservando os registros históricos ligados ao identificador interno.</p>
+      <div class="alert danger" role="alert" th:if="${erroExclusao}" th:text="${erroExclusao}"></div>
+      <form method="post" th:action="@{/perfil/excluir}">
+        <div class="grid grid-2 profile-grid">
+          <div class="form-group">
+            <label for="senhaExclusao">Sua senha atual</label>
+            <input type="password" id="senhaExclusao" name="senhaExclusao" autocomplete="current-password" required>
+          </div>
+          <div class="form-group">
+            <label for="confirmacaoExclusao">Digite EXCLUIR para confirmar</label>
+            <input type="text" id="confirmacaoExclusao" name="confirmacaoExclusao" autocomplete="off" required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-danger">Excluir minha conta</button>
+      </form>
+    </section>
+  </div>
+</th:block>
+</body>
+</html>

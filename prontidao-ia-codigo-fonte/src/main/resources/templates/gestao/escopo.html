@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: pagina('Escopo de atividades', ~{::conteudo})}">
+<body>
+<th:block th:fragment="conteudo" th:remove="tag">
+<div>
+
+  <a class="btn-ghost voltar" th:href="@{/gestao/times/{id}(id=${tela.timeId})}" th:text="|← ${tela.time}|">← Atendimento</a>
+
+  <div class="page-head">
+    <div>
+      <h2 th:text="|Escopo de atividades · ${tela.time}|">Escopo de atividades · Atendimento</h2>
+      <p th:if="${tela.cicloAberto != null}" th:text="|Ciclo aberto: ${tela.cicloAberto.numero} de ${totalDeCiclos}|">Ciclo aberto: 5 de 6</p>
+    </div>
+  </div>
+
+  <div class="alert success" role="status" th:if="${sucesso}"><span th:text="${sucesso}">Intervenção agendada.</span></div>
+  <div class="alert danger" role="alert" th:if="${erro}"><span th:text="${erro}">Erro.</span></div>
+
+  <div class="alert info" role="status" th:unless="${tela.temAlerta()}">
+    <span>Este time não tem recomendação aceita. O escopo muda a partir da decisão sobre um alerta.</span>
+  </div>
+
+  <th:block th:if="${tela.temAlerta()}">
+
+    <form th:action="@{/gestao/times/{id}/escopo(id=${tela.timeId})}" method="post">
+      <input type="hidden" name="alertaId" th:value="${tela.alertaId}">
+      <div class="grid grid-2">
+        <section class="card" aria-labelledby="titulo-atual">
+          <h3 id="titulo-atual">Escopo atual</h3>
+          <ul class="lista-limpa lista-escopo">
+            <li th:each="a : ${tela.atual}" th:text="${a}">5A · Formulação e verificação</li>
+          </ul>
+        </section>
+        <section class="card" aria-labelledby="titulo-proposto">
+          <h3 id="titulo-proposto">Escopo proposto</h3>
+          <ul class="lista-limpa lista-escopo">
+            <li th:each="a, i : ${tela.proposto}" th:text="${a}"
+                th:classappend="${a != tela.atual[i.index]} ? 'item-trocado'">Trilha verificação</li>
+          </ul>
+          <label class="quiz-option troca" th:if="${tela.temTroca() and tela.podeSalvar()}">
+            <input type="checkbox" name="aplicarTroca" value="true" checked>
+            <span th:text="|Trocar ${tela.troca}|">Trocar 5A → Trilha</span>
+          </label>
+          <p class="texto-mudo" th:if="${tela.temTroca() and tela.podeSalvar() and !tela.valeNoCicloAberto}"
+             th:text="|Algum membro do time já começou uma atividade neste ciclo: a troca vale a partir do ciclo ${tela.cicloAberto.numero + 1}.|">
+            A troca vale a partir do próximo ciclo.</p>
+          <p class="texto-mudo" th:if="${tela.temTroca() and tela.podeSalvar() and tela.valeNoCicloAberto}">
+            Ninguém do time começou as atividades deste ciclo: a troca vale já no ciclo aberto. O nível da atividade não muda.</p>
+          <p class="texto-mudo" th:unless="${tela.temTroca()}">Nenhuma troca de atividade de plataforma foi aceita.</p>
+        </section>
+      </div>
+      <div class="btn-row acoes-form" th:if="${tela.podeSalvar()}">
+        <button type="submit" class="btn btn-primary">Salvar escopo</button>
+      </div>
+      <div class="alert info" role="status" th:unless="${tela.podeSalvar()}">
+        <span th:text="|Escopo salvo. Alerta ${tela.selo.rotuloStatus()}.|">Escopo salvo. Alerta em acompanhamento.</span>
+      </div>
+    </form>
+
+    <section class="card intervencoes-humanas" aria-labelledby="titulo-humanas" th:if="${!#lists.isEmpty(tela.humanas)}">
+      <h3 id="titulo-humanas">Intervenções humanas</h3>
+      <p class="texto-mudo">O sistema registra a data prevista; quem executa é o responsável indicado.</p>
+      <div class="humana" th:each="h : ${tela.humanas}">
+        <div>
+          <strong th:text="${h.texto}">Comunicação da liderança…</strong>
+          <span class="texto-mudo" th:text="|Executor: ${h.executor}|">Executor: Liderança</span>
+          <span class="badge badge-success" th:if="${h.dataPrevista != null}"
+                th:text="|Agendada para ${#temporals.format(h.dataPrevista, 'dd/MM/yyyy')}|">Agendada</span>
+        </div>
+        <form th:action="@{/gestao/recomendacoes/{id}/agendar(id=${h.recomendacaoId})}" method="post" class="form-agendar">
+          <label th:for="|data${h.recomendacaoId}|">Data prevista</label>
+          <input type="date" th:id="|data${h.recomendacaoId}|" name="data" th:value="${h.dataPrevista}" required>
+          <button type="submit" class="btn btn-secondary">Marcar como agendada</button>
+        </form>
+      </div>
+    </section>
+
+  </th:block>
+
+</div>
+</th:block>
+</body>
+</html>

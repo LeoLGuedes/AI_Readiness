@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: pagina('Visão geral', ~{::conteudo})}">
+<body>
+<th:block th:fragment="conteudo" th:remove="tag">
+<div>
+
+  <div class="page-head">
+    <div>
+      <h2>Visão geral dos times</h2>
+      <p th:if="${visao.temCiclo()}"
+         th:text="|Ciclo ${visao.ciclo.numero} · ${#temporals.format(visao.ciclo.inicio, 'dd/MM')} a ${#temporals.format(visao.ciclo.fim, 'dd/MM')} · fechado|">
+        Ciclo 4 · 22/09 a 28/09 · fechado</p>
+    </div>
+    <form th:if="${visao.temCiclo()}" method="get" th:action="@{/gestao}" class="seletor-ciclo">
+      <label for="ciclo">Ciclo</label>
+      <select id="ciclo" name="ciclo" onchange="this.form.submit()">
+        <option th:each="c : ${visao.ciclosFechados}" th:value="${c.numero}"
+                th:selected="${c.numero == visao.ciclo.numero}"
+                th:text="|${c.numero} de ${totalDeCiclos}|">4 de 6</option>
+      </select>
+      <noscript><button type="submit" class="btn btn-secondary">Ver</button></noscript>
+    </form>
+  </div>
+
+  <div class="alert info" role="status" th:unless="${visao.temCiclo()}">
+    <span>Ainda não há ciclo fechado. Os indicadores aparecem aqui depois do primeiro fechamento.</span>
+  </div>
+
+  <th:block th:if="${visao.temCiclo()}">
+
+    <div class="alert warning faixa-erro" role="note" th:if="${visao.maiorErro != null}">
+      <span>
+        <strong th:text="|Maior erro da empresa no ciclo ${visao.ciclo.numero}:|">Maior erro da empresa no ciclo 4:</strong>
+        <span th:text="|${visao.maiorErro.area} · ${visao.maiorErro.erro}% de erro|">Verificação das respostas da IA · 42% de erro</span>
+      </span>
+    </div>
+
+    <div class="lista-cartoes">
+      <article class="card cartao-time" th:each="t : ${visao.cartoes}">
+        <div class="card-topo">
+          <h3 th:text="${t.nome}">Atendimento</h3>
+          <div class="selos">
+            <span th:each="s : ${t.alertas}" class="badge badge-alerta" th:classappend="${s.classe()}"
+                  th:text="|${s.nome} · ${s.rotuloPrioridade()}${s.status.name() == 'ABERTO' ? '' : ' · ' + s.rotuloStatus()}|">
+              Sabe usar, mas não se sente pronto · Alta</span>
+            <span th:if="${#lists.isEmpty(t.alertas)}" class="badge badge-muted">Sem alertas</span>
+          </div>
+        </div>
+        <div class="grid grid-4">
+          <div class="kpi" th:each="k : ${t.kpis}">
+            <div class="label" th:text="${k.nome}">Técnico</div>
+            <div class="value" th:text="${k.valor != null} ? ${k.valor} : '—'">72</div>
+            <div class="delta" th:classappend="${k.classe()}" th:text="${k.valor != null} ? ${k.variacao()} : 'amostra insuficiente'">↑ +5</div>
+          </div>
+        </div>
+        <div class="split rodape-cartao">
+          <span class="texto-mudo num"
+                th:text="|Tempo médio ${#numbers.formatDecimal(t.tempoMedioMin, 1, 1, 'COMMA')} min · ${t.checkins} de ${t.membros} check-ins|">
+            Tempo médio 10,9 min · 7 de 8 check-ins</span>
+          <a class="btn btn-secondary" th:href="@{/gestao/times/{id}(id=${t.timeId}, ate=${visao.ciclo.numero})}">Ver detalhe do time →</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="alert success destaque-ganho" role="note" th:if="${visao.destaque != null and visao.destaque.ganho > 0}">
+      <span>
+        <strong>Maior ganho de confiança desde o ciclo 1:</strong>
+        <span th:text="|${visao.destaque.time}: +${visao.destaque.ganho} pontos (${visao.destaque.de} → ${visao.destaque.para})|">
+          Financeiro: +19 pontos (34 → 53)</span>
+      </span>
+    </div>
+
+  </th:block>
+
+</div>
+</th:block>
+</body>
+</html>

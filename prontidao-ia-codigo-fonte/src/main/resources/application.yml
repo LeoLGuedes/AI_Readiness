@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: prontidao-ia
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/prontidao
+    username: prontidao
+    password: prontidao
+
+  jpa:
+    hibernate:
+      ddl-auto: validate      # o esquema e do Flyway; o JPA so confere
+    open-in-view: false
+    properties:
+      hibernate.jdbc.time_zone: UTC
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+  thymeleaf:
+    cache: false
+
+server:
+  error:
+    whitelabel:
+      enabled: false
+
+# ---------------------------------------------------------------------
+# Limiares das regras de negocio (secao 5 da especificacao).
+# Cada valor e lido por uma classe de regra; nenhum numero fica no codigo.
+# ---------------------------------------------------------------------
+prontidao:
+  ciclos:
+    total: 6
+    dias-por-ciclo: 7
+    # Secao 5.5 - o agendador fecha o ciclo quando a data de fim passou.
+    fechamento-automatico: true
+
+  limiares:
+    # Secao 5.1 - amostra minima de check-ins por time no ciclo.
+    amostra-minima-checkins: 5
+
+    # Secao 5.2 regra A - divergencia tecnico x confianca.
+    queda-minima-confianca: 5
+
+    # Secao 5.2 regra B - confianca sem verificacao.
+    confianca-alta: 75
+    acerto-minimo-verificacao: 50
+
+    # Secao 5.2 - prioridade do alerta.
+    queda-engajamento-prioridade-alta: 10
+
+    # Secao 5.2 - encerramento dos alertas A e B.
+    ciclos-para-encerramento: 2
+
+    # Secao 5.3 - quantas dificuldades viram recomendacao no alerta A.
+    dificuldades-por-recomendacao: 2
+
+logging:
+  level:
+    br.com.prontidaoia: INFO

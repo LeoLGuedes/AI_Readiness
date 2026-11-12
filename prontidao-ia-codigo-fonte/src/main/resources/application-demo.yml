@@ -1,0 +1,9 @@
+# Perfil "demo": habilita o painel /demo, o seed do cenario simulado e a
+# faixa "Ambiente de demonstracao: dados simulados" em todas as paginas.
+prontidao:
+  demo:
+    ativo: true
+    senha-padrao: demo123
+    semente: 20260924
+    # Banco sem ciclos: sobe ja com o cenario da secao 8.2 (ciclo 4 aberto).
+    restaurar-ao-iniciar: true

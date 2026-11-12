@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Criar conta · Prontidão IA</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar"><a class="brand" th:href="@{/login}">
+    <span class="brand-mark" aria-hidden="true">PI</span>
+    <span>Prontidão IA <small>Seguradora Aurora</small></span>
+  </a></header>
+  <p class="faixa-demo" th:if="${ambienteDemo}">Ambiente de demonstração: dados simulados</p>
+  <main class="auth-wrap">
+    <section class="auth-card" aria-labelledby="cadastro-titulo">
+      <h2 id="cadastro-titulo">Criar conta</h2>
+      <p>Cadastro exclusivo de colaboradores. Contas de gestão são pré-configuradas.</p>
+      <div class="alert danger" role="alert" th:if="${erroCadastro}" th:text="${erroCadastro}"></div>
+      <form th:action="@{/cadastro}" th:object="${cadastro}" method="post">
+        <div class="alert danger" role="alert" th:if="${#fields.hasErrors('*')}">Revise os campos indicados.</div>
+        <div class="form-group">
+          <label for="nome">Nome completo</label>
+          <input id="nome" type="text" th:field="*{nome}" maxlength="120" required autocomplete="name">
+          <span class="form-error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input id="email" type="email" th:field="*{email}" maxlength="160" required autocomplete="email">
+          <span class="form-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        </div>
+        <div class="form-group">
+          <label for="departamentoId">Departamento</label>
+          <select id="departamentoId" th:field="*{departamentoId}" required>
+            <option value="">Selecione seu departamento</option>
+            <option th:each="time : ${departamentos}" th:value="${time.id}" th:text="${time.nome}">Atendimento</option>
+          </select>
+          <span class="form-error" th:if="${#fields.hasErrors('departamentoId')}" th:errors="*{departamentoId}"></span>
+          <small class="helper">Atendimento, Financeiro ou Marketing.</small>
+        </div>
+        <div class="form-group">
+          <label for="senha">Senha</label>
+          <input id="senha" type="password" name="senha" minlength="8" maxlength="72" required autocomplete="new-password">
+          <small class="helper">Entre 8 e 72 caracteres; armazenada como hash BCrypt.</small>
+          <span class="form-error" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></span>
+        </div>
+        <div class="form-group">
+          <label for="confirmacao">Confirmar senha</label>
+          <input id="confirmacao" type="password" name="confirmacao" required autocomplete="new-password">
+          <span class="form-error" th:if="${#fields.hasErrors('confirmacao')}" th:errors="*{confirmacao}"></span>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%" th:disabled="${#lists.isEmpty(departamentos)}">Criar conta de colaborador</button>
+      </form>
+      <p class="helper" th:if="${#lists.isEmpty(departamentos)}">Departamentos indisponíveis. Solicite a configuração inicial dos times.</p>
+      <a class="btn btn-secondary auth-secondary-action" th:href="@{/login}">Voltar ao login</a>
+    </section>
+  </main>
+</div>
+</body>
+</html>

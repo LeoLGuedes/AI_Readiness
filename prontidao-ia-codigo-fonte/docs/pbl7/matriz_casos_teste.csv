@@ -1,0 +1,18 @@
+﻿id;dimensao;procedimento;instrumento;criterio_esperado;arquivo_ou_evidencia;prioridade
+T01;Login e autenticação;Login Carla válido/inválido;MockMvc JUnit;Autentica somente senha correta;SegurancaWebTest;crítico
+T02;Segregação de perfis;"Carla tenta GET/POST de gestão; Renata tenta check-in";MockMvc JUnit;HTTP 403 nas ações sem permissão;SegurancaWebTest + AvaliacaoSegurancaPbl7Test;crítico
+T03;CSRF;POST de restauração/fechamento sem token;MockMvc JUnit;HTTP 403;AvaliacaoSegurancaPbl7Test;crítico
+T04;Quiz;"10 respostas corretas e incorretas; finalização";JUnit/MockMvc;Percentual, tempo e resultado corretos;CorrecaoTest + ExecucaoAtividadeServiceTest;crítico
+T05;Validação quiz;Questão em branco, escolha inexistente, formulário malformado;JUnit;Recusa/informa pendência, sem gravação inválida;CorrecaoTest + AvaliacaoEntradaPbl7Test;alto
+T06;Check-in;Envio válido, repetido, incompleto;JUnit/MockMvc;"Um registro por colaborador/ciclo; erro visível";CheckinServiceTest + TelasDoColaboradorTest;crítico
+T07;Privacidade;4 vs 5 check-ins;JUnit / integração;"Com 4 nulos/ocultos; com 5 agregados";CalculoIndicadoresTest + TelasDaGestaoTest;crítico
+T08;Indicadores;Conferir técnico, confiança, resistência, engajamento;JUnit puro;Resultados conforme fórmulas da especificação;CalculoIndicadoresTest;crítico
+T09;Alertas;Atendimento regra A/Marketing regra B/Financeiro sem alerta;JUnit + integração;Alertas e prioridades conforme cenário;RegrasDeAlertaTest + InvariantesDoCenarioTest;crítico
+T10;Recomendações;Aceitar, ajustar, adiar, agendar, trocar escopo;MockMvc / integração;Status/escopo gravados e evolução mostrada;TelasDaGestaoTest;alto
+T11;Fechamento;"Fechar ciclo e avançar; apenas um aberto";Integração Testcontainers;Fotografias e estados corretos;FechamentoCicloServiceTest;crítico
+T12;Reprodutibilidade;Restaurar cenário 2 vezes;Integração Testcontainers;9 fotografias idênticas, ciclo 4 aberto;AvaliacaoReprodutibilidadePbl7Test;alto
+T13;Segurança do demo;Carla consegue ver /demo no perfil demo;MockMvc (caracterização);Documentar acesso permitido e risco em uso real;AvaliacaoSegurancaPbl7Test;limitação
+T14;Desempenho local;GET /login 30 requisições sequenciais;PowerShell;"Informar média, p50, p95, HTTP200; sem simular carga";medir-login.ps1;médio
+T15;Usabilidade colaborador;Completar quiz, check-in, consultar resultado;Observação com participantes;Sucesso, duração, erros, assistência;protocolo_usabilidade.md;alto
+T16;Usabilidade gestor;Encontrar time problema, compreender alerta, propor ação;Observação com participantes;Sucesso, duração, erros, explicação correta;protocolo_usabilidade.md;alto
+T17;Utilidade decisória;Identificar problema real do cenário com dados agregados;Estudo de tarefa;Decisão e justificativa corretas;protocolo_usabilidade.md;alto
