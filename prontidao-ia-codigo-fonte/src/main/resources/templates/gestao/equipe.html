@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: pagina('Equipe', ~{::conteudo})}">
+<body>
+<th:block th:fragment="conteudo" th:remove="tag">
+<div class="tela-equipe">
+
+  <div class="page-head">
+    <div>
+      <h2 th:text="${tela.veTodos} ? 'Equipes dos departamentos' : |Equipe · ${tela.departamentoLiderado}|">Equipe · Financeiro</h2>
+      <p th:if="${tela.veTodos}">Como gerente de RH, você acompanha todos os departamentos e pode criar colaboradores em qualquer um deles.</p>
+      <p th:unless="${tela.veTodos}">Como líder, você acompanha apenas o seu departamento e cria colaboradores somente para ele.</p>
+    </div>
+  </div>
+
+  <div class="alert success" role="status" th:if="${sucesso}"><span th:text="${sucesso}">Colaborador criado.</span></div>
+
+  <div class="alert info" role="status" th:unless="${tela.podeCriar()}">
+    <span>Você ainda não lidera um departamento. Peça à gerente de RH para vinculá-lo.</span>
+  </div>
+
+  <div class="lista-cartoes" th:if="${tela.podeCriar()}">
+    <article class="card" th:each="dep : ${tela.departamentos}">
+      <div class="card-topo">
+        <h3 th:text="${dep.nome}">Financeiro</h3>
+        <span class="badge badge-primary"
+              th:text="${dep.lider != null} ? |Líder: ${dep.lider}| : 'Sem líder · responde ao RH'">Líder: Ricardo Pimenta</span>
+      </div>
+      <div class="grid grid-2">
+        <div class="kpi">
+          <div class="label">Colaboradores ativos</div>
+          <div class="value" th:text="${dep.colaboradores}">8</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Criados por você</div>
+          <div class="value" th:text="${dep.criadosPorMim}">0</div>
+        </div>
+      </div>
+      <div class="split rodape-cartao">
+        <span class="texto-mudo">Por privacidade (seção 4), a gestão vê o time de forma agregada, sem a lista de pessoas.</span>
+        <a class="btn btn-secondary" th:href="@{/gestao/times/{id}(id=${dep.id})}">Ver desempenho →</a>
+      </div>
+    </article>
+  </div>
+
+  <section class="card" aria-labelledby="titulo-novo" th:if="${tela.podeCriar()}">
+    <h3 id="titulo-novo">Novo colaborador</h3>
+    <p class="texto-mudo">A conta é criada sempre com o papel <b>Colaborador</b>. A pessoa pode trocar a senha inicial em “Meu perfil”.</p>
+
+    <div class="alert danger" role="alert" th:if="${erroCriacao}" th:text="${erroCriacao}">Erro.</div>
+
+    <form th:action="@{/gestao/equipe}" th:object="${novo}" method="post">
+      <div class="alert danger" role="alert" th:if="${#fields.hasErrors('*')}">Revise os campos indicados.</div>
+      <div class="grid grid-2">
+        <div class="form-group">
+          <label for="nome">Nome completo</label>
+          <input id="nome" type="text" th:field="*{nome}" maxlength="120" required autocomplete="off">
+          <span class="form-error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input id="email" type="email" th:field="*{email}" maxlength="160" required autocomplete="off">
+          <span class="form-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="departamentoId">Departamento</label>
+        <select id="departamentoId" th:field="*{departamentoId}" required>
+          <option value="" th:unless="${tela.departamentoFixo()}">Selecione o departamento</option>
+          <option th:each="dep : ${tela.departamentos}" th:value="${dep.id}" th:text="${dep.nome}">Financeiro</option>
+        </select>
+        <small class="helper" th:if="${tela.departamentoFixo()}"
+               th:text="|Líderes criam colaboradores apenas para o próprio departamento (${tela.departamentoLiderado}).|">
+          Líderes criam colaboradores apenas para o próprio departamento.</small>
+        <span class="form-error" th:if="${#fields.hasErrors('departamentoId')}" th:errors="*{departamentoId}"></span>
+      </div>
+      <div class="grid grid-2">
+        <div class="form-group">
+          <label for="senha">Senha inicial</label>
+          <input id="senha" type="password" name="senha" minlength="8" maxlength="72" required autocomplete="new-password">
+          <small class="helper">Entre 8 e 72 caracteres; armazenada como hash BCrypt.</small>
+          <span class="form-error" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></span>
+        </div>
+        <div class="form-group">
+          <label for="confirmacao">Confirmar senha</label>
+          <input id="confirmacao" type="password" name="confirmacao" required autocomplete="new-password">
+          <span class="form-error" th:if="${#fields.hasErrors('confirmacao')}" th:errors="*{confirmacao}"></span>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Criar colaborador</button>
+    </form>
+  </section>
+
+</div>
+</th:block>
+</body>
+</html>

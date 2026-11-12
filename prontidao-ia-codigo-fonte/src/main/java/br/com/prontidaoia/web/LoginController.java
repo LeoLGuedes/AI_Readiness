@@ -41,8 +41,14 @@ public class LoginController {
         if (demo.ativo()) {
             model.addAttribute("senhaDemo", demo.senhaPadrao());
             model.addAttribute("usuariosDemo", List.of(
-                    new UsuarioDemo("Renata Guimarães", "Gestora de pessoas",
+                    new UsuarioDemo(PessoasDemo.GESTORA, "Gerente de RH · vê todos os departamentos",
                             PessoasDemo.email(PessoasDemo.GESTORA)),
+                    new UsuarioDemo(PessoasDemo.LIDER_ATENDIMENTO, "Líder · Atendimento",
+                            PessoasDemo.email(PessoasDemo.LIDER_ATENDIMENTO)),
+                    new UsuarioDemo(PessoasDemo.LIDER_FINANCEIRO, "Líder · Financeiro",
+                            PessoasDemo.email(PessoasDemo.LIDER_FINANCEIRO)),
+                    new UsuarioDemo(PessoasDemo.LIDER_MARKETING, "Líder · Marketing",
+                            PessoasDemo.email(PessoasDemo.LIDER_MARKETING)),
                     new UsuarioDemo("Carla Menezes", "Atendente · time Atendimento",
                             PessoasDemo.email(PessoasDemo.CARLA))));
         }

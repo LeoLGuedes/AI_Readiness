@@ -19,6 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 /**
  * Quadro 3: a recomendação de um alerta e as três decisões da gestão
  * (seção 5.4): aceitar, ajustar (FA1) e adiar.
+ *
+ * <p>Toda rota confere o departamento do alerta ({@link AcessoDepartamento}).</p>
  */
 @Controller
 public class RecomendacaoController {
@@ -27,14 +29,19 @@ public class RecomendacaoController {
 
     private final RecomendacaoQuery consulta;
     private final RecomendacaoService decisoes;
+    private final AcessoDepartamento acesso;
 
-    public RecomendacaoController(RecomendacaoQuery consulta, RecomendacaoService decisoes) {
+    public RecomendacaoController(RecomendacaoQuery consulta, RecomendacaoService decisoes,
+                                  AcessoDepartamento acesso) {
         this.consulta = consulta;
         this.decisoes = decisoes;
+        this.acesso = acesso;
     }
 
     @GetMapping("/gestao/alertas/{id}/recomendacao")
-    public String recomendacao(@PathVariable Long id, @RequestParam(required = false) String ajustar, Model model) {
+    public String recomendacao(@AuthenticationPrincipal UsuarioAutenticado usuario, @PathVariable Long id,
+                               @RequestParam(required = false) String ajustar, Model model) {
+        acesso.exigirAlerta(usuario, id);
         model.addAttribute("menuAtivo", "visao-geral");
         model.addAttribute("tela", consulta.doAlerta(id));
         model.addAttribute("ajustando", ajustar != null);
@@ -43,6 +50,7 @@ public class RecomendacaoController {
 
     @PostMapping("/gestao/alertas/{id}/recomendacao/aceitar")
     public String aceitar(@PathVariable Long id, @AuthenticationPrincipal UsuarioAutenticado gestor) {
+        acesso.exigirAlerta(gestor, id);
         TelaRecomendacao tela = consulta.doAlerta(id);
         decisoes.aceitar(id, gestor.getId());
         return "redirect:/gestao/times/" + tela.timeId() + "/escopo";
@@ -55,6 +63,7 @@ public class RecomendacaoController {
     @PostMapping("/gestao/alertas/{id}/recomendacao/ajustar")
     public String ajustar(@PathVariable Long id, @RequestParam Map<String, String> campos,
                           @AuthenticationPrincipal UsuarioAutenticado gestor, RedirectAttributes redirect) {
+        acesso.exigirAlerta(gestor, id);
         TelaRecomendacao tela = consulta.doAlerta(id);
         try {
             for (Item item : tela.itens()) {
@@ -74,6 +83,7 @@ public class RecomendacaoController {
     @PostMapping("/gestao/alertas/{id}/recomendacao/adiar")
     public String adiar(@PathVariable Long id, @AuthenticationPrincipal UsuarioAutenticado gestor,
                         RedirectAttributes redirect) {
+        acesso.exigirAlerta(gestor, id);
         TelaRecomendacao tela = consulta.doAlerta(id);
         decisoes.adiar(id, gestor.getId());
         redirect.addFlashAttribute("sucesso", "Recomendação adiada.");

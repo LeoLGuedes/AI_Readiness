@@ -21,4 +21,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     long countByTimeIdAndAtivoTrue(Long timeId);
 
     List<Usuario> findByPapelOrderByNome(Papel papel);
+
+    long countByTimeIdAndAtivoTrueAndPapel(Long timeId, Papel papel);
+
+    long countByCriadoPorIdAndTimeId(Long criadoPorId, Long timeId);
 }

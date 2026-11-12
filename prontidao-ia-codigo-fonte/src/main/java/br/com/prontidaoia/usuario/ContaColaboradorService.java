@@ -12,7 +12,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/** CRUD do proprio colaborador; gestor nao pode ser criado por formulario. */
+/**
+ * CRUD do proprio colaborador e criacao de colaboradores pela lideranca.
+ *
+ * <p>Hierarquia: o lider cria colaboradores somente para o departamento que
+ * lidera; a gerente de RH cria para qualquer departamento. Nenhum formulario
+ * cria lider ou gestor: o papel e sempre COLABORADOR.</p>
+ */
 @Service
 public class ContaColaboradorService {
     private static final Set<String> DEPARTAMENTOS = Set.of("Atendimento", "Financeiro", "Marketing");
@@ -45,7 +51,7 @@ public class ContaColaboradorService {
     public DadosPerfil perfil(Long usuarioId) {
         Usuario usuario = buscarAtivo(usuarioId);
         if (usuario.getPapel() != Papel.COLABORADOR) {
-            throw new RegraVioladaException("O perfil de colaborador não está disponível para gestores.");
+            throw new RegraVioladaException("O perfil de colaborador não está disponível para líderes e RH.");
         }
         return new DadosPerfil(usuario.getId(), usuario.getNome(), usuario.getEmail(),
                 usuario.getTime().getNome(), usuario.getTime().getId(), usuario.isAutocadastro());
@@ -65,6 +71,50 @@ public class ContaColaboradorService {
             usuarios.saveAndFlush(pessoa);
         } catch (DataIntegrityViolationException ex) {
             throw new RegraVioladaException("Este e-mail já está cadastrado.");
+        }
+    }
+
+    /**
+     * Cria um colaborador a pedido da lideranca. O papel do autor e o
+     * departamento que ele lidera sao lidos do banco, nunca do formulario.
+     *
+     * @return o colaborador criado
+     */
+    @Transactional
+    public Usuario cadastrarPelaLideranca(Long autorId, CadastroForm formulario) {
+        Usuario autor = buscarAtivo(autorId);
+        TimeEntity time = departamento(formulario.getDepartamentoId());
+        exigirPodeCriarEm(autor, time);
+        String nome = nome(formulario.getNome());
+        String email = email(formulario.getEmail());
+        validarSenha(formulario.getSenha(), formulario.getConfirmacao(), true);
+        if (usuarios.existsByEmail(email)) {
+            throw new RegraVioladaException("Este e-mail já está cadastrado.");
+        }
+        Usuario pessoa = Usuario.colaboradorCriadoPor(nome, email, encoder.encode(formulario.getSenha()),
+                time, autor);
+        try {
+            return usuarios.saveAndFlush(pessoa);
+        } catch (DataIntegrityViolationException ex) {
+            throw new RegraVioladaException("Este e-mail já está cadastrado.");
+        }
+    }
+
+    /** Regra da hierarquia para criar contas: RH em qualquer departamento, lider so no seu. */
+    private void exigirPodeCriarEm(Usuario autor, TimeEntity time) {
+        switch (autor.getPapel()) {
+            case GESTOR -> { }
+            case LIDER -> {
+                TimeEntity liderado = times.findByGestorIdOrderByNome(autor.getId()).stream().findFirst()
+                        .orElseThrow(() -> new RegraVioladaException(
+                                "Você ainda não lidera um departamento. Peça ao RH para vinculá-lo."));
+                if (!liderado.getId().equals(time.getId())) {
+                    throw new RegraVioladaException("Como líder do departamento " + liderado.getNome()
+                            + ", você só pode criar colaboradores para o " + liderado.getNome() + ".");
+                }
+            }
+            default -> throw new RegraVioladaException(
+                    "Somente líderes de departamento e a gerente de RH criam colaboradores.");
         }
     }
 

@@ -13,8 +13,11 @@ import org.springframework.security.web.SecurityFilterChain;
  * Login por formulario com os dois papeis da secao 2.
  *
  * <p>A separacao por prefixo de URL e a primeira camada da regra de
- * privacidade da secao 4: tudo que o gestor ve fica sob {@code /gestao}, e
- * nenhuma rota de colaborador e alcancavel por ele.</p>
+ * privacidade da secao 4: tudo que a gestao (lider ou gerente de RH) ve fica
+ * sob {@code /gestao}, e nenhuma rota de colaborador e alcancavel por ela.</p>
+ *
+ * <p>A segunda camada, por departamento, fica em
+ * {@code gestao.AcessoDepartamento}: o lider so abre o proprio time.</p>
  */
 @Configuration
 @EnableWebSecurity
@@ -30,7 +33,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(rotas -> rotas
                         .requestMatchers("/login", "/cadastro", "/css/**", "/js/**", "/favicon.ico").permitAll()
-                        .requestMatchers("/gestao/**").hasRole(Papel.GESTOR.name())
+                        .requestMatchers("/gestao/**").hasAnyRole(Papel.GESTOR.name(), Papel.LIDER.name())
                         .requestMatchers("/inicio", "/checkin/**", "/atividades/**", "/meu-historico/**", "/perfil", "/perfil/**")
                             .hasRole(Papel.COLABORADOR.name())
                         // /demo serve aos dois papeis e so existe no perfil demo.

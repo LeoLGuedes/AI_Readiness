@@ -707,3 +707,63 @@ abaixo de 10,9 min nesses prints (ver D48).
 **Motivo:** no Windows o git gravou o arquivo sem permissão de execução, e
 `./gradlew` falharia com "permission denied" na máquina de um colega com
 Linux ou macOS.
+
+---
+
+## Melhoria: hierarquia de departamentos
+
+### D55: Três níveis de acesso: gerente de RH, líder e colaborador (hierarquia)
+
+**Decisão:** cada time passa a ser um **departamento** (Atendimento,
+Financeiro e Marketing) com um **líder** (papel novo `LIDER`). O papel
+`GESTOR` passa a significar a **gerente de RH** (Renata), que vê todos os
+departamentos e faz a análise geral. O líder vê apenas o próprio
+departamento: visão geral, detalhe do time, recomendações e escopo. Um id de
+outro time, alerta ou recomendação na URL devolve 403
+(`gestao/AcessoDepartamento`).
+
+**Alternativa descartada:** renomear o enum `GESTOR` para `RH`.
+
+**Motivo:** o valor já está gravado no banco e em vários testes; a mudança de
+nome não altera o comportamento. O texto da tela diz "Gerente de RH".
+
+### D56: O líder se liga ao departamento por `time.gestor_id` e não é membro do time (hierarquia)
+
+**Decisão:** o líder tem `time_id` nulo (restrição `ck_usuario_lider_sem_time`)
+e o departamento aponta para ele pela coluna `gestor_id`, que já existia.
+
+**Alternativa descartada:** colocar o líder no time com `time_id`.
+
+**Motivo:** ele entraria na contagem de membros e no cálculo dos indicadores
+(engajamento, amostra mínima), mudando os números do cenário da seção 8.
+
+### D57: Líder cria colaboradores só no próprio departamento; RH em qualquer um (hierarquia)
+
+**Decisão:** a tela `/gestao/equipe` cria contas sempre com o papel
+`COLABORADOR`. O serviço (`ContaColaboradorService.cadastrarPelaLideranca`)
+lê do banco o papel do autor e o departamento que ele lidera; se o líder
+enviar outro departamento no formulário, nada é criado e a tela explica a
+regra. A coluna `criado_por_id` guarda quem criou a conta.
+
+**Alternativa descartada:** confiar no campo travado do formulário.
+
+**Motivo:** o navegador pode ser adulterado; a regra precisa valer no servidor.
+
+### D58: A tela de equipe mostra contagens, não a lista de pessoas (hierarquia)
+
+**Decisão:** a tela de equipe mostra, por departamento, o líder, o número de
+colaboradores ativos e quantos o usuário criou. Ela não lista nomes.
+
+**Alternativa descartada:** listar os colaboradores do departamento.
+
+**Motivo:** a invariante 9 (seção 4) proíbe que qualquer rota de `/gestao`
+mostre dado de uma pessoa específica, e o teste `invariante9` percorre todas
+essas rotas.
+
+### D59: O "maior erro" e o "maior ganho" usam só os times visíveis (hierarquia)
+
+**Decisão:** para o líder, a faixa vira "Maior erro do departamento" e o
+"maior ganho de confiança entre os times" some (só há um time).
+
+**Motivo:** o maior erro da empresa inteira revelaria ao líder dados de
+outros departamentos.
